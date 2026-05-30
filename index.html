@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <title>Биржа товарных знаков - ПатентВсем</title>
+    <meta name="description" content="Каталог готовых товарных знаков с фильтрами по МКТУ, скидкам и типу бизнеса.">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#catalog" aria-label="ПатентВсем">
+        <strong>ПВ</strong>
+        <span>ПатентВсем</span>
+      </a>
+      <nav class="main-nav" aria-label="Основная навигация">
+        <a href="#catalog">Каталог</a>
+        <a href="#how">Как это работает</a>
+        <a href="#place">Разместить знак</a>
+        <a href="#admin">Админка</a>
+      </nav>
+      <button class="header-cart" type="button" data-open-cart>
+        <span>Заявка</span>
+        <strong data-cart-count>0</strong>
+      </button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Биржа товарных знаков</p>
+          <h1>Готовые бренды с проверкой в Роспатенте</h1>
+          <p>Подбираем товарные знаки для покупки и передаем заявку специалисту PatentVsem. Контакты владельцев скрыты, сделку сопровождает команда по интеллектуальной собственности.</p>
+          <div class="hero-actions">
+            <a class="button button-accent" href="#catalog">Перейти в каталог</a>
+            <a class="button button-ghost" href="#place">Разместить знак</a>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-orbit">
+            <span>МКТУ</span>
+            <strong>45</strong>
+          </div>
+          <div class="hero-card-mini main">
+            <small>товарный знак</small>
+            <strong>№1089437</strong>
+            <span>3 / 5 / 9 / 35 / 42</span>
+          </div>
+          <div class="hero-card-mini side">
+            <small>сопровождение</small>
+            <strong>PatentVsem</strong>
+            <span>заявка + проверка + сделка</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="proof-strip" aria-label="Преимущества">
+        <div><strong>30</strong><span>стартовых знаков из каталога PatentVsem</span></div>
+        <div><strong>1000+</strong><span>карточек выдержит структура фильтров</span></div>
+        <div><strong>0</strong><span>публичных контактов владельцев знаков</span></div>
+      </section>
+
+      <section class="catalog-shell" id="catalog">
+        <div class="catalog-head">
+          <div>
+            <p class="eyebrow">Каталог</p>
+            <h2>Выберите знак под задачу бизнеса</h2>
+            <p>Фильтры собраны по логике маркетплейса, но визуально каталог остается частью PatentVsem.</p>
+          </div>
+          <button class="button button-dark" type="button" data-open-cart>Открыть заявку</button>
+        </div>
+
+        <div class="toolbar" aria-label="Фильтры каталога">
+          <label class="search-field">
+            <span>Поиск</span>
+            <input type="search" data-search placeholder="Номер, МКТУ или бизнес">
+          </label>
+          <label>
+            <span>МКТУ</span>
+            <select data-class-filter>
+              <option value="">Все классы</option>
+            </select>
+          </label>
+          <label>
+            <span>Скидка</span>
+            <select data-discount-filter>
+              <option value="">Все знаки</option>
+              <option value="discount">Есть скидка</option>
+            </select>
+          </label>
+          <label>
+            <span>Что за бизнес</span>
+            <select data-business-filter>
+              <option value="">Любой бизнес</option>
+            </select>
+          </label>
+          <label>
+            <span>Сортировка</span>
+            <select data-sort>
+              <option value="default">По порядку</option>
+              <option value="price-asc">Цена ниже</option>
+              <option value="classes-desc">Больше классов</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="catalog-meta">
+          <span data-result-count></span>
+          <button class="link-button" type="button" data-reset>Сбросить фильтры</button>
+        </div>
+
+        <section class="grid" data-grid aria-live="polite"></section>
+        <div class="pagination" data-pagination></div>
+      </section>
+
+      <section class="info-band" id="how">
+        <div>
+          <p class="eyebrow">Сделка через ПатентВсем</p>
+          <h2>Покупатель видит знак, а контакты владельца остаются закрытыми</h2>
+        </div>
+        <ol class="steps">
+          <li><strong>Выбор</strong><span>Клиент фильтрует каталог и добавляет интересные знаки в заявку.</span></li>
+          <li><strong>Лид</strong><span>Форма передает номер знака, МКТУ и ссылку на реестр в PatentVsem.</span></li>
+          <li><strong>Сопровождение</strong><span>Специалист связывается с клиентом и ведет сделку вручную.</span></li>
+        </ol>
+      </section>
+
+      <section class="service-band">
+        <div class="service-heading">
+          <p class="eyebrow">Сервис PatentVsem</p>
+          <h2>Не просто витрина, а вход в юридическое сопровождение</h2>
+        </div>
+        <div class="service-grid">
+          <article><span>01</span><h3>Проверка</h3><p>В карточке остается прямая ссылка на реестр, чтобы быстро сверить статус знака.</p></article>
+          <article><span>02</span><h3>Подбор</h3><p>МКТУ, скидка и направление бизнеса помогают быстро сузить каталог.</p></article>
+          <article><span>03</span><h3>Сделка</h3><p>Заявка уходит в PatentVsem, дальше с клиентом работает специалист.</p></article>
+        </div>
+      </section>
+
+      <section class="request-section" id="place">
+        <div class="request-copy">
+          <p class="eyebrow">Для владельцев знаков</p>
+          <h2>Разместить знак на бирже</h2>
+          <p>Форма не публикует знак автоматически. Заявка уходит сотруднику, после проверки знак добавляется через админку.</p>
+        </div>
+        <form class="request-form" data-place-form>
+          <label>Имя<input name="name" required></label>
+          <label>Телефон<input name="phone" required inputmode="tel"></label>
+          <label>Email<input name="email" type="email"></label>
+          <label>Номер свидетельства<input name="certificate" required></label>
+          <label>Описание знака<textarea name="description" rows="4" placeholder="История, классы МКТУ, желаемая цена"></textarea></label>
+          <button class="button button-dark" type="submit">Отправить заявку</button>
+          <p class="form-note" data-place-status></p>
+        </form>
+      </section>
+
+      <section class="admin-section" id="admin">
+        <div>
+          <p class="eyebrow">Локальная заготовка</p>
+          <h2>Админка сотрудника</h2>
+          <p>Пока это локальный прототип: добавленные записи сохраняются в браузере. При подключении backend эти же поля станут настоящей админкой.</p>
+        </div>
+        <form class="admin-form" data-admin-form>
+          <label>Название<input name="title" required placeholder="Например: знак №1113022"></label>
+          <label>Номер свидетельства<input name="certificate" required></label>
+          <label>Классы МКТУ<input name="classes" required placeholder="3, 5, 35"></label>
+          <label>Цена<input name="price" required placeholder="от 100 000 руб. за класс"></label>
+          <label>Что за бизнес<input name="business" placeholder="косметика, маркетплейсы"></label>
+          <label class="checkbox"><input type="checkbox" name="discount"> <span>Есть скидка</span></label>
+          <button class="button button-dark" type="submit">Добавить локально</button>
+          <p class="form-note" data-admin-status></p>
+        </form>
+      </section>
+    </main>
+
+    <div class="modal" data-modal hidden>
+      <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+        <button class="modal-close" type="button" data-close-cart aria-label="Закрыть">×</button>
+        <h2 id="cart-title">Заявка на товарные знаки</h2>
+        <div data-cart-items class="cart-items"></div>
+        <form class="lead-form" data-lead-form>
+          <label>Имя<input name="name" required></label>
+          <label>Телефон<input name="phone" required inputmode="tel"></label>
+          <label>Email<input name="email" type="email"></label>
+          <label>Комментарий<textarea name="comment" rows="3"></textarea></label>
+          <input type="hidden" name="selected" data-selected-input>
+          <button class="button button-accent" type="submit">Отправить в ПатентВсем</button>
+          <p class="form-note" data-lead-status></p>
+        </form>
+      </div>
+    </div>
+
+    <template data-card-template>
+      <article class="tm-card">
+        <button class="favorite-button" type="button" data-favorite aria-label="Добавить в избранное">♡</button>
+        <div class="tm-logo" data-logo></div>
+        <div class="tm-card-body">
+          <p class="tm-type">Товарный знак</p>
+          <h2 data-title></h2>
+          <a class="registry-link" data-registry target="_blank" rel="noopener">Проверить в реестре</a>
+          <div class="class-list" data-classes></div>
+          <p class="business" data-business></p>
+          <div class="price-row">
+            <strong data-price></strong>
+            <span data-discount></span>
+          </div>
+          <div class="card-actions">
+            <button class="button button-dark" type="button" data-add-cart>В заявку</button>
+            <button class="button button-outline" type="button" data-details>Подробнее</button>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>

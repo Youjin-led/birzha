@@ -203,6 +203,10 @@
           <label>Email<input name="email" type="email"></label>
           <label>Номер свидетельства<input name="certificate" required></label>
           <label>Описание знака<textarea name="description" rows="4" placeholder="История, классы МКТУ, желаемая цена"></textarea></label>
+          <label class="privacy-consent">
+            <input type="checkbox" name="privacy" required checked>
+            <span>Нажимая кнопку «Отправить заявку», вы соглашаетесь с <a href="https://patentvsem.ru/privacy" target="_blank" rel="noopener">политикой обработки персональных данных</a>.</span>
+          </label>
           <button class="button button-dark" type="submit">Отправить заявку</button>
           <p class="form-note" data-place-status></p>
         </form>
@@ -266,6 +270,10 @@
           <label>Комментарий<textarea name="comment" rows="3"></textarea></label>
           <input type="hidden" name="intent" data-intent-input>
           <input type="hidden" name="selected" data-selected-input>
+          <label class="privacy-consent">
+            <input type="checkbox" name="privacy" required checked>
+            <span>Нажимая кнопку «Отправить в ПатентВсем», вы соглашаетесь с <a href="https://patentvsem.ru/privacy" target="_blank" rel="noopener">политикой обработки персональных данных</a>.</span>
+          </label>
           <button class="button button-accent" type="submit">Отправить в ПатентВсем</button>
           <p class="form-note" data-lead-status></p>
         </form>

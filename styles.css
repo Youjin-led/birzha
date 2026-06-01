@@ -941,6 +941,30 @@ textarea {
   min-height: 18px;
 }
 
+.privacy-consent {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 10px;
+  align-items: start;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.privacy-consent input {
+  width: 16px;
+  min-height: 16px;
+  margin: 1px 0 0;
+  accent-color: var(--accent-strong);
+}
+
+.privacy-consent a {
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
 .form-note {
   min-height: 20px;
   margin: 0;

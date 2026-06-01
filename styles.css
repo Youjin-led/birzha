@@ -2092,6 +2092,24 @@ textarea {
   opacity: 0.78;
 }
 
+body .request-section,
+body .request-section .request-copy,
+body .request-section .request-copy *,
+body .request-section .request-copy .eyebrow,
+body .request-section .request-copy h2,
+body .request-section .request-copy p {
+  color: #141414 !important;
+}
+
+body .request-section .request-copy h2 {
+  text-shadow: none;
+}
+
+body .request-section .request-form .privacy-consent span,
+body .request-section .request-form .privacy-consent a {
+  color: #333333;
+}
+
 @media (max-width: 640px) {
   .promo-sale {
     margin-top: 24px;

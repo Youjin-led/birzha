@@ -44,6 +44,7 @@ const state = {
   sort: 'default',
   page: 1,
   perPage: 24,
+  intent: 'Покупка товарного знака',
   favorites: loadList(favoritesKey),
   cart: loadList(cartKey)
 };
@@ -58,7 +59,9 @@ const discountFilter = document.querySelector('[data-discount-filter]');
 const sortSelect = document.querySelector('[data-sort]');
 const cartCount = document.querySelector('[data-cart-count]');
 const modal = document.querySelector('[data-modal]');
+const modalTitle = document.querySelector('[data-modal-title]');
 const cartItems = document.querySelector('[data-cart-items]');
+const intentInput = document.querySelector('[data-intent-input]');
 const selectedInput = document.querySelector('[data-selected-input]');
 const pagination = document.querySelector('[data-pagination]');
 
@@ -78,10 +81,21 @@ function allTrademarks() {
   const custom = loadList(customKey);
   return [...sourceTrademarks, ...custom].map((item, index) => ({
     title: item.title || `Знак №${item.id}`,
+    logo: item.logo || makeLogoText(item, index),
     registry: item.registry || `${registryBase}${encodeURIComponent(item.id)}`,
     order: index + 1,
     ...item
   }));
+}
+
+function makeLogoText(item, index) {
+  const words = ['NOVA', 'AURA', 'MEDIX', 'COSMO', 'FIT', 'KIDS', 'HOME', 'SOFT', 'CAFE', 'SPORT', 'BEAUTY', 'TRADE'];
+  const business = item.business?.[0] || '';
+  if (business.toLowerCase().includes('космет')) return 'COSMO';
+  if (business.toLowerCase().includes('мед')) return 'MEDIX';
+  if (business.toLowerCase().includes('еда') || business.toLowerCase().includes('ресторан')) return 'CAFE';
+  if (business.toLowerCase().includes('it')) return 'SOFT';
+  return words[index % words.length];
 }
 
 function transliterate(value) {
@@ -158,7 +172,7 @@ function renderCatalog() {
     const favoriteButton = node.querySelector('[data-favorite]');
     const inFavorites = state.favorites.includes(item.id);
 
-    node.querySelector('[data-logo]').textContent = item.id.slice(-4);
+    node.querySelector('[data-logo]').innerHTML = `<strong>${item.logo}</strong><span>№${item.id}</span>`;
     node.querySelector('[data-title]').textContent = item.title;
     node.querySelector('[data-registry]').href = item.registry;
     node.querySelector('[data-classes]').innerHTML = item.classes.map((value) => `<span>${value}</span>`).join('');
@@ -169,8 +183,8 @@ function renderCatalog() {
     favoriteButton.textContent = inFavorites ? '♥' : '♡';
 
     favoriteButton.addEventListener('click', () => toggleFavorite(item.id));
-    node.querySelector('[data-add-cart]').addEventListener('click', () => addToCart(item.id));
-    node.querySelector('[data-details]').addEventListener('click', () => addToCart(item.id, true));
+    node.querySelector('[data-buy]').addEventListener('click', () => addToCart(item.id, true, 'Покупка товарного знака'));
+    node.querySelector('[data-consult]').addEventListener('click', () => addToCart(item.id, true, 'Консультация по товарному знаку'));
     grid.appendChild(node);
   });
   renderPagination(pageCount);
@@ -201,7 +215,8 @@ function toggleFavorite(id) {
   renderCatalog();
 }
 
-function addToCart(id, open = false) {
+function addToCart(id, open = false, intent = state.intent) {
+  state.intent = intent;
   if (!state.cart.includes(id)) {
     state.cart.push(id);
     saveList(cartKey, state.cart);
@@ -219,7 +234,11 @@ function removeFromCart(id) {
 function updateCart() {
   cartCount.textContent = state.cart.length;
   const items = allTrademarks().filter((item) => state.cart.includes(item.id));
-  selectedInput.value = items.map((item) => `${item.title}: ${item.registry}`).join('\n');
+  intentInput.value = state.intent;
+  selectedInput.value = [
+    `Цель заявки: ${state.intent}`,
+    ...items.map((item) => `${item.title}: ${item.registry}`)
+  ].join('\n');
   cartItems.innerHTML = items.length
     ? items.map((item) => `
       <div class="cart-item">
@@ -230,14 +249,18 @@ function updateCart() {
         <button type="button" data-remove="${item.id}">Убрать</button>
       </div>
     `).join('')
-    : '<p>Добавьте один или несколько товарных знаков в заявку.</p>';
+    : '<p>Опишите задачу в комментарии, и мы подберем знак из каталога или закрытой базы.</p>';
 
   cartItems.querySelectorAll('[data-remove]').forEach((button) => {
     button.addEventListener('click', () => removeFromCart(button.dataset.remove));
   });
 }
 
-function openCart() {
+function openCart(intent = state.intent) {
+  state.intent = intent;
+  modalTitle.textContent = state.intent === 'Консультация по подбору товарного знака'
+    ? 'Подобрать знак бесплатно'
+    : 'Заявка на товарные знаки';
   updateCart();
   modal.hidden = false;
   document.body.style.overflow = 'hidden';
@@ -288,7 +311,15 @@ function bindControls() {
     sortSelect.value = 'default';
     renderCatalog();
   });
-  document.querySelector('[data-open-cart]').addEventListener('click', openCart);
+  document.querySelectorAll('[data-open-cart]').forEach((button) => {
+    button.addEventListener('click', () => openCart('Покупка товарного знака'));
+  });
+  document.querySelectorAll('[data-open-lead]').forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      openCart('Консультация по подбору товарного знака');
+    });
+  });
   document.querySelector('[data-close-cart]').addEventListener('click', closeCart);
   modal.addEventListener('click', (event) => {
     if (event.target === modal) closeCart();

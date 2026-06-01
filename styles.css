@@ -1856,3 +1856,173 @@ textarea {
     width: 132px;
   }
 }
+
+/* Second TZ pass */
+.hero h1 {
+  max-width: 780px;
+  font-size: clamp(42px, 4.2vw, 58px);
+  line-height: 1.15;
+}
+
+.hero h1 span {
+  display: block;
+  white-space: nowrap;
+}
+
+.hero {
+  grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.72fr);
+}
+
+.hero-actions {
+  align-items: center;
+}
+
+.brand-card {
+  line-height: 1.15;
+}
+
+.brand-card-primary {
+  min-width: 360px;
+}
+
+.brand-card-secondary {
+  min-width: 330px;
+}
+
+.brand-card-tertiary {
+  min-width: 305px;
+}
+
+.brand-mark {
+  font-size: clamp(32px, 3.4vw, 46px);
+}
+
+.brand-card small {
+  max-width: 320px;
+  line-height: 1.35;
+}
+
+.brand-card-mini span {
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.proof-strip strong {
+  font-weight: 900;
+}
+
+.benefit-grid article {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(20, 20, 20, 0.08);
+}
+
+.benefit-grid article::after {
+  content: "";
+  position: absolute;
+  inset: auto -34px -42px auto;
+  width: 112px;
+  height: 112px;
+  border-radius: 999px;
+  background: #fff705;
+  opacity: 0.22;
+}
+
+.benefit-grid article span {
+  width: 58px;
+  height: 58px;
+  border: 2px solid #141414;
+  border-radius: 16px;
+  background: #fff705;
+  color: #141414;
+  font-size: 20px;
+  font-weight: 900;
+  box-shadow: 8px 8px 0 #141414;
+}
+
+.expert-card {
+  min-height: 158px;
+}
+
+.expert-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.expert-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid #141414;
+  border-radius: 999px;
+  background: #fff705;
+  color: #141414;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.mktu-grid a[data-mktu-select] {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid #fff705;
+  border-radius: 10px;
+  background: #fff705;
+  color: #141414;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.mktu-grid a[data-mktu-select]:hover,
+.mktu-grid a[data-mktu-select]:focus-visible {
+  background: #141414;
+  color: #fff705;
+  outline: 2px solid #fff705;
+  outline-offset: 2px;
+}
+
+.cart-item button {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid #141414;
+  border-radius: 8px;
+  background: #141414;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.cart-item button:hover {
+  background: #fff705;
+  color: #141414;
+}
+
+.admin-section[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 1180px) {
+  .hero h1 span {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero h1 span {
+    white-space: normal;
+  }
+
+  .brand-card-primary {
+    min-width: 0;
+  }
+
+  .brand-card small {
+    max-width: 100%;
+  }
+
+  .benefit-grid article span {
+    box-shadow: 5px 5px 0 #141414;
+  }
+}

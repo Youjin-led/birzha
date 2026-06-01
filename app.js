@@ -64,6 +64,7 @@ const cartItems = document.querySelector('[data-cart-items]');
 const intentInput = document.querySelector('[data-intent-input]');
 const selectedInput = document.querySelector('[data-selected-input]');
 const pagination = document.querySelector('[data-pagination]');
+const adminSection = document.querySelector('[data-admin-section]');
 
 function loadList(key) {
   try {
@@ -288,6 +289,11 @@ function closeCart() {
 }
 
 function bindControls() {
+  const adminEnabled = new URLSearchParams(window.location.search).get('admin') === '1';
+  if (adminSection && adminEnabled) {
+    adminSection.hidden = false;
+  }
+
   searchInput.addEventListener('input', (event) => {
     state.search = event.target.value.trim();
     state.page = 1;
@@ -336,6 +342,16 @@ function bindControls() {
       openCart('Консультация по подбору товарного знака');
     });
   });
+  document.querySelectorAll('[data-mktu-select]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      state.classFilter = event.currentTarget.dataset.mktuSelect;
+      state.page = 1;
+      classFilter.value = state.classFilter;
+      renderCatalog();
+      document.querySelector('#catalog').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
   document.querySelector('[data-close-cart]').addEventListener('click', closeCart);
   modal.addEventListener('click', (event) => {
     if (event.target === modal) closeCart();
@@ -354,7 +370,10 @@ function bindForms() {
     document.querySelector('[data-place-status]').textContent = 'Заявка на размещение собрана локально.';
   });
 
-  document.querySelector('[data-admin-form]').addEventListener('submit', (event) => {
+  const adminForm = document.querySelector('[data-admin-form]');
+  if (!adminForm) return;
+
+  adminForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const certificate = form.get('certificate').trim();

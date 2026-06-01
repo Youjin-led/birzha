@@ -562,6 +562,14 @@ textarea {
   font-size: 13px;
 }
 
+.tm-logo img {
+  display: block;
+  width: min(210px, calc(100% - 38px));
+  max-height: 96px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
 .favorite-button {
   position: absolute;
   top: 12px;
@@ -894,7 +902,7 @@ textarea {
 .request-section,
 .admin-section {
   display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(320px, 0.9fr);
+  grid-template-columns: minmax(0, 0.74fr) minmax(360px, 1fr);
   gap: 36px;
   padding: 56px 0;
 }
@@ -912,6 +920,47 @@ textarea {
   background: #eee8dd;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
+}
+
+.admin-section {
+  align-items: start;
+  padding-top: 72px;
+  border-top: 1px solid var(--line);
+}
+
+.admin-note {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid rgba(140, 37, 34, 0.16);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.admin-note strong {
+  color: var(--danger);
+}
+
+.admin-note span {
+  color: var(--muted);
+}
+
+.admin-form {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.admin-form label:has(textarea),
+.admin-actions,
+.admin-form .form-note {
+  grid-column: 1 / -1;
+}
+
+.admin-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
 }
 
 .faq-section {
@@ -1260,6 +1309,8 @@ textarea {
   .toolbar,
   .faq-head,
   .faq-list,
+  .admin-form,
+  .admin-actions,
   .grid,
   .card-actions,
   .team-grid,

@@ -20,6 +20,7 @@
         <a href="#mktu">МКТУ</a>
         <a href="#catalog">Каталог</a>
         <a href="#faq">FAQ</a>
+        <a href="#admin">Админка</a>
         <a href="#place">Разместить знак</a>
       </nav>
       <button class="header-cart" type="button" data-open-cart>
@@ -339,20 +340,30 @@
         </div>
       </section>
 
-      <section class="admin-section" id="admin" hidden>
-        <div>
-          <p class="eyebrow">Локальная заготовка</p>
-          <h2>Админка сотрудника</h2>
-          <p>Пока это локальный прототип: добавленные записи сохраняются в браузере. При подключении backend эти же поля станут настоящей админкой.</p>
+      <section class="admin-section" id="admin">
+        <div class="admin-copy">
+          <p class="eyebrow">Кабинет сотрудника</p>
+          <h2>Добавить знак в каталог без кода</h2>
+          <p>Заполните номер свидетельства, классы МКТУ, ссылку Роспатента, цену и визуал. Карточка сохранится в браузере сотрудника и сразу появится в каталоге.</p>
+          <div class="admin-note">
+            <strong>Важно</strong>
+            <span>Это локальная админка для ручного наполнения. После подключения backend эти же поля можно перенести в серверную панель.</span>
+          </div>
         </div>
         <form class="admin-form" data-admin-form>
-          <label>Название<input name="title" required placeholder="Например: знак №1113022"></label>
-          <label>Номер свидетельства<input name="certificate" required></label>
+          <label>Название карточки<input name="title" required placeholder="Например: AURA BEAUTY"></label>
+          <label>Номер свидетельства<input name="certificate" required placeholder="Например: 1113022"></label>
+          <label>Ссылка на Роспатент / ФИПС<input name="registry" type="url" placeholder="https://www1.fips.ru/..."></label>
           <label>Классы МКТУ<input name="classes" required placeholder="3, 5, 35"></label>
           <label>Цена<input name="price" required placeholder="от 100 000 руб. за класс"></label>
-          <label>Что за бизнес<input name="business" placeholder="косметика, маркетплейсы"></label>
-          <label class="checkbox"><input type="checkbox" name="discount"> <span>Есть скидка</span></label>
-          <button class="button button-dark" type="submit">Добавить локально</button>
+          <label>Что за бизнес<input name="business" required placeholder="косметика, маркетплейсы"></label>
+          <label>Текст логотипа<input name="logo" placeholder="AURA"></label>
+          <label>Фото / логотип, URL<input name="image" type="url" placeholder="https://site.ru/logo.jpg"></label>
+          <label>Описание для сотрудника<textarea name="description" rows="3" placeholder="Кратко: кому подходит, особенности, комментарии по лоту"></textarea></label>
+          <div class="admin-actions">
+            <label class="checkbox"><input type="checkbox" name="discount"> <span>Есть скидка</span></label>
+            <button class="button button-dark" type="submit">Добавить в каталог</button>
+          </div>
           <p class="form-note" data-admin-status></p>
         </form>
       </section>

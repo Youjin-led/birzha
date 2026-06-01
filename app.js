@@ -98,6 +98,19 @@ function makeLogoText(item, index) {
   return words[index % words.length];
 }
 
+function parseList(value) {
+  return `${value}`.split(',').map((item) => item.trim()).filter(Boolean);
+}
+
+function parseClasses(value) {
+  return parseList(value).map((item) => Number(item)).filter(Boolean);
+}
+
+function getMinPrice(value) {
+  const match = `${value}`.replace(/\s/g, '').match(/\d+/);
+  return match ? Number(match[0]) : 100000;
+}
+
 function transliterate(value) {
   const map = {
     а: 'a', б: 'b', в: 'v', г: 'g', д: 'd', е: 'e', ё: 'e', ж: 'zh', з: 'z', и: 'i', й: 'i',
@@ -172,7 +185,10 @@ function renderCatalog() {
     const favoriteButton = node.querySelector('[data-favorite]');
     const inFavorites = state.favorites.includes(item.id);
 
-    node.querySelector('[data-logo]').innerHTML = `<strong>${item.logo}</strong><span>№${item.id}</span>`;
+    const logoNode = node.querySelector('[data-logo]');
+    logoNode.innerHTML = item.image
+      ? `<img src="${item.image}" alt="${item.title}"><span>№${item.id}</span>`
+      : `<strong>${item.logo}</strong><span>№${item.id}</span>`;
     node.querySelector('[data-title]').textContent = item.title;
     node.querySelector('[data-registry]').href = item.registry;
     node.querySelector('[data-classes]').innerHTML = item.classes.map((value) => `<span>${value}</span>`).join('');
@@ -341,16 +357,26 @@ function bindForms() {
   document.querySelector('[data-admin-form]').addEventListener('submit', (event) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
+    const certificate = form.get('certificate').trim();
+    const registry = form.get('registry').trim();
+    const business = parseList(form.get('business'));
     const item = {
-      id: form.get('certificate').trim(),
+      id: certificate,
       title: form.get('title').trim(),
-      classes: form.get('classes').split(',').map((value) => Number(value.trim())).filter(Boolean),
+      classes: parseClasses(form.get('classes')),
       price: form.get('price').trim(),
-      minPrice: Number((form.get('price').match(/\d+/) || ['100000'])[0]) || 100000,
+      minPrice: getMinPrice(form.get('price')),
       discount: form.get('discount') === 'on',
-      business: form.get('business').split(',').map((value) => value.trim()).filter(Boolean),
-      registry: `${registryBase}${encodeURIComponent(form.get('certificate').trim())}`
+      business,
+      logo: form.get('logo').trim() || undefined,
+      image: form.get('image').trim() || undefined,
+      description: form.get('description').trim() || undefined,
+      registry: registry || `${registryBase}${encodeURIComponent(certificate)}`
     };
+    if (!item.classes.length || !item.business.length) {
+      document.querySelector('[data-admin-status]').textContent = 'Заполните классы МКТУ и направление бизнеса через запятую.';
+      return;
+    }
     const custom = loadList(customKey).filter((stored) => stored.id !== item.id);
     custom.push(item);
     saveList(customKey, custom);

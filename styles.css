@@ -1009,6 +1009,63 @@ textarea {
   cursor: pointer;
 }
 
+.site-footer {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
+  gap: 32px;
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 42px 0 52px;
+  border-top: 1px solid var(--line);
+}
+
+.footer-brand {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.footer-brand h2 {
+  font-size: clamp(28px, 3vw, 40px);
+}
+
+.footer-brand a,
+.footer-details a {
+  color: var(--danger);
+  font-weight: 700;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.footer-brand span {
+  color: var(--muted);
+}
+
+.footer-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.footer-details div {
+  display: grid;
+  gap: 6px;
+  min-height: 92px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.footer-details span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.footer-details strong {
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 980px) {
   .site-header,
   .hero,
@@ -1017,6 +1074,7 @@ textarea {
   .info-band,
   .deal-section,
   .mktu-head,
+  .site-footer,
   .request-section,
   .admin-section {
     grid-template-columns: 1fr;
@@ -1098,6 +1156,7 @@ textarea {
   .grid,
   .card-actions,
   .team-grid,
+  .footer-details,
   .mktu-grid {
     grid-template-columns: 1fr;
   }

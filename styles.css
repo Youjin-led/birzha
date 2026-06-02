@@ -2960,3 +2960,22 @@ section[id],
     padding: 5px 10px;
   }
 }
+
+/* Header logo emphasis */
+.site-header .brand {
+  padding: 4px 8px;
+  border-radius: 10px;
+}
+
+.site-header .brand-logo {
+  width: 188px;
+  max-width: 46vw;
+  filter: contrast(1.16) saturate(1.08) drop-shadow(0 2px 0 rgba(20, 20, 20, 0.22));
+}
+
+@media (max-width: 640px) {
+  .site-header .brand-logo {
+    width: 150px;
+    max-width: 62vw;
+  }
+}

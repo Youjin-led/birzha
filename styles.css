@@ -22,6 +22,12 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 112px;
+}
+
+section[id],
+.promo-sale[id] {
+  scroll-margin-top: 112px;
 }
 
 body {
@@ -1269,6 +1275,15 @@ textarea {
 }
 
 @media (max-width: 640px) {
+  html {
+    scroll-padding-top: 156px;
+  }
+
+  section[id],
+  .promo-sale[id] {
+    scroll-margin-top: 156px;
+  }
+
   .site-header {
     gap: 12px;
   }

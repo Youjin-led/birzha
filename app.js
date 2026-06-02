@@ -2,6 +2,25 @@ const registryBase = 'https://www1.fips.ru/registers-doc-view/fips_servlet?DB=RU
 const cartKey = 'znakvsem-cart-v1';
 const favoritesKey = 'znakvsem-favorites-v1';
 const customKey = 'znakvsem-custom-v1';
+const patentvsemLeadUrl = 'https://patentvsem.ru/tovarniy-znak';
+const leadActions = {
+  buy: {
+    label: 'Покупка готового товарного знака',
+    title: 'Заявка на покупку товарного знака'
+  },
+  consult: {
+    label: 'Бесплатная консультация по товарным знакам',
+    title: 'Бесплатная консультация'
+  },
+  registration: {
+    label: 'Ускоренная регистрация товарного знака',
+    title: 'Ускоренная регистрация за 3 месяца'
+  },
+  place: {
+    label: 'Размещение знака на бирже',
+    title: 'Разместить знак на бирже'
+  }
+};
 
 const sourceTrademarks = [
   { id: '1063814', classes: [17, 19, 35, 36, 37, 39], price: 'от 90 тыс. за каждый класс', minPrice: 90000, discount: true, business: ['строительство', 'недвижимость', 'услуги'] },
@@ -46,9 +65,11 @@ const state = {
   sort: 'default',
   page: 1,
   perPage: 24,
-  intent: 'Покупка товарного знака',
+  action: 'buy',
+  intent: leadActions.buy.label,
   favorites: loadList(favoritesKey),
-  cart: loadList(cartKey)
+  cart: loadList(cartKey),
+  selectedClasses: {}
 };
 
 const grid = document.querySelector('[data-grid]');
@@ -67,6 +88,8 @@ const intentInput = document.querySelector('[data-intent-input]');
 const selectedInput = document.querySelector('[data-selected-input]');
 const pagination = document.querySelector('[data-pagination]');
 const adminSection = document.querySelector('[data-admin-section]');
+const adminList = document.querySelector('[data-admin-list]');
+const exportCustomButton = document.querySelector('[data-export-custom]');
 
 function loadList(key) {
   try {
@@ -82,14 +105,70 @@ function saveList(key, value) {
 
 function allTrademarks() {
   const custom = loadList(customKey);
-  return [...sourceTrademarks, ...custom].map((item, index) => ({
+  const customIds = new Set(custom.map((item) => item.id));
+  return [...sourceTrademarks.filter((item) => !customIds.has(item.id)), ...custom].map((item, index) => ({
+    order: index + 1,
+    ...item,
     title: item.title || `Знак №${item.id}`,
     logo: item.logo || makeLogoText(item, index),
     image: item.image || (sourceTrademarkIds.has(item.id) ? `assets/catalog/tm-${item.id}.jpg` : undefined),
-    registry: item.registry || `${registryBase}${encodeURIComponent(item.id)}`,
-    order: index + 1,
-    ...item
+    registry: item.registry || `${registryBase}${encodeURIComponent(item.id)}`
   }));
+}
+
+function escapeHtml(value) {
+  return `${value}`.replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  })[char]);
+}
+
+function renderAdminList() {
+  if (!adminList) return;
+  const custom = loadList(customKey);
+  if (!custom.length) {
+    adminList.innerHTML = '<p class="admin-empty">Пока нет локально добавленных карточек.</p>';
+    if (exportCustomButton) exportCustomButton.disabled = true;
+    return;
+  }
+
+  if (exportCustomButton) exportCustomButton.disabled = false;
+  adminList.innerHTML = custom.map((item) => `
+    <article class="admin-item">
+      <div>
+        <strong>${escapeHtml(item.title || `Знак №${item.id}`)}</strong>
+        <span>№${escapeHtml(item.id)} · МКТУ: ${escapeHtml(item.classes.join(', '))}</span>
+        <span>${escapeHtml(item.price)} · ${escapeHtml(item.business.join(', '))}</span>
+      </div>
+      <button type="button" data-delete-custom="${escapeHtml(item.id)}">Удалить</button>
+    </article>
+  `).join('');
+
+  adminList.querySelectorAll('[data-delete-custom]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const id = button.dataset.deleteCustom;
+      saveList(customKey, loadList(customKey).filter((item) => item.id !== id));
+      document.querySelector('[data-admin-status]').textContent = `Карточка №${id} удалена из локального каталога.`;
+      refreshFilters();
+      renderCatalog();
+      renderAdminList();
+    });
+  });
+}
+
+function exportCustomCards() {
+  const custom = loadList(customKey);
+  if (!custom.length) return;
+  const blob = new Blob([JSON.stringify(custom, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'birzha-custom-trademarks.json';
+  link.click();
+  URL.revokeObjectURL(url);
 }
 
 function makeLogoText(item, index) {
@@ -113,6 +192,76 @@ function parseClasses(value) {
 function getMinPrice(value) {
   const match = `${value}`.replace(/\s/g, '').match(/\d+/);
   return match ? Number(match[0]) : 100000;
+}
+
+function getSelectedClasses(item) {
+  const stored = state.selectedClasses[item.id];
+  return stored?.length ? stored : item.classes.map(String);
+}
+
+function setSelectedClass(id, value, checked) {
+  const item = allTrademarks().find((entry) => entry.id === id);
+  if (!item) return;
+  const current = new Set(getSelectedClasses(item));
+  if (checked) {
+    current.add(value);
+  } else {
+    current.delete(value);
+  }
+  state.selectedClasses[id] = current.size ? [...current] : item.classes.map(String);
+  updateCart();
+}
+
+function getCartItems() {
+  return allTrademarks().filter((item) => state.cart.includes(item.id));
+}
+
+function buildPatentvsemUrl(action, payload = {}) {
+  const params = new URLSearchParams();
+  params.set('source', 'znakvsem');
+  params.set('action', action);
+  params.set('action_title', leadActions[action]?.label || state.intent);
+
+  Object.entries(payload).forEach(([key, value]) => {
+    if (value) params.set(key, value);
+  });
+
+  return `${patentvsemLeadUrl}?${params.toString()}`;
+}
+
+function redirectToPatentvsem(action, payload = {}) {
+  window.location.href = buildPatentvsemUrl(action, payload);
+}
+
+function getCartPayload(form) {
+  const data = new FormData(form);
+  const items = getCartItems();
+  const selected = items.map((item) => {
+    const classes = getSelectedClasses(item).join(', ');
+    return `${item.title} №${item.id}; МКТУ: ${classes}; ${item.price}; ${item.registry}`;
+  }).join('\n');
+
+  return {
+    name: data.get('name')?.trim(),
+    phone: data.get('phone')?.trim(),
+    email: data.get('email')?.trim(),
+    comment: data.get('comment')?.trim(),
+    selected,
+    selected_count: items.length ? String(items.length) : '',
+    intent: state.intent
+  };
+}
+
+function getPlacePayload(form) {
+  const data = new FormData(form);
+  return {
+    name: data.get('name')?.trim(),
+    phone: data.get('phone')?.trim(),
+    email: data.get('email')?.trim(),
+    certificate: data.get('certificate')?.trim(),
+    description: data.get('description')?.trim(),
+    intent: leadActions.place.label
+  };
 }
 
 function transliterate(value) {
@@ -169,6 +318,12 @@ function renderFilters() {
   businessFilter.insertAdjacentHTML('beforeend', businesses.map((item) => `<option value="${item}">${item}</option>`).join(''));
 }
 
+function refreshFilters() {
+  classFilter.querySelectorAll('option:not(:first-child)').forEach((option) => option.remove());
+  businessFilter.querySelectorAll('option:not(:first-child)').forEach((option) => option.remove());
+  renderFilters();
+}
+
 function renderCatalog() {
   const list = filteredTrademarks();
   const pageCount = Math.max(1, Math.ceil(list.length / state.perPage));
@@ -203,8 +358,8 @@ function renderCatalog() {
     favoriteButton.textContent = inFavorites ? '♥' : '♡';
 
     favoriteButton.addEventListener('click', () => toggleFavorite(item.id));
-    node.querySelector('[data-buy]').addEventListener('click', () => addToCart(item.id, true, 'Покупка товарного знака'));
-    node.querySelector('[data-consult]').addEventListener('click', () => addToCart(item.id, true, 'Консультация по товарному знаку'));
+    node.querySelector('[data-buy]').addEventListener('click', () => addToCart(item.id, true, 'buy'));
+    node.querySelector('[data-consult]').addEventListener('click', () => addToCart(item.id, true, 'consult'));
     grid.appendChild(node);
   });
   renderPagination(pageCount);
@@ -235,8 +390,9 @@ function toggleFavorite(id) {
   renderCatalog();
 }
 
-function addToCart(id, open = false, intent = state.intent) {
-  state.intent = intent;
+function addToCart(id, open = false, action = state.action) {
+  state.action = action;
+  state.intent = leadActions[action]?.label || state.intent;
   if (!state.cart.includes(id)) {
     state.cart.push(id);
     saveList(cartKey, state.cart);
@@ -247,24 +403,35 @@ function addToCart(id, open = false, intent = state.intent) {
 
 function removeFromCart(id) {
   state.cart = state.cart.filter((item) => item !== id);
+  delete state.selectedClasses[id];
   saveList(cartKey, state.cart);
   updateCart();
 }
 
 function updateCart() {
   cartCount.textContent = state.cart.length;
-  const items = allTrademarks().filter((item) => state.cart.includes(item.id));
+  const items = getCartItems();
   intentInput.value = state.intent;
   selectedInput.value = [
     `Цель заявки: ${state.intent}`,
-    ...items.map((item) => `${item.title}: ${item.registry}`)
+    ...items.map((item) => `${item.title}: МКТУ ${getSelectedClasses(item).join(', ')}; ${item.registry}`)
   ].join('\n');
   cartItems.innerHTML = items.length
     ? items.map((item) => `
       <div class="cart-item">
         <div>
           <strong>${item.title}</strong>
-          <div>${item.price}; МКТУ: ${item.classes.join(', ')}</div>
+          <div>${item.price}</div>
+          <div class="cart-class-picker">
+            <span>Выберите классы МКТУ</span>
+            <div>
+              ${item.classes.map((value) => {
+                const classValue = String(value);
+                const checked = getSelectedClasses(item).includes(classValue) ? 'checked' : '';
+                return `<label><input type="checkbox" data-cart-class data-id="${item.id}" value="${classValue}" ${checked}>${classValue}</label>`;
+              }).join('')}
+            </div>
+          </div>
         </div>
         <button type="button" data-remove="${item.id}">Убрать</button>
       </div>
@@ -274,13 +441,15 @@ function updateCart() {
   cartItems.querySelectorAll('[data-remove]').forEach((button) => {
     button.addEventListener('click', () => removeFromCart(button.dataset.remove));
   });
+  cartItems.querySelectorAll('[data-cart-class]').forEach((input) => {
+    input.addEventListener('change', () => setSelectedClass(input.dataset.id, input.value, input.checked));
+  });
 }
 
-function openCart(intent = state.intent) {
-  state.intent = intent;
-  modalTitle.textContent = state.intent === 'Консультация по подбору товарного знака'
-    ? 'Подобрать знак бесплатно'
-    : 'Заявка на товарные знаки';
+function openCart(action = state.action) {
+  state.action = action;
+  state.intent = leadActions[action]?.label || state.intent;
+  modalTitle.textContent = leadActions[action]?.title || 'Заявка на товарные знаки';
   updateCart();
   modal.hidden = false;
   document.body.style.overflow = 'hidden';
@@ -337,13 +506,16 @@ function bindControls() {
     renderCatalog();
   });
   document.querySelectorAll('[data-open-cart]').forEach((button) => {
-    button.addEventListener('click', () => openCart('Покупка товарного знака'));
+    button.addEventListener('click', () => openCart('buy'));
   });
   document.querySelectorAll('[data-open-lead]').forEach((button) => {
     button.addEventListener('click', (event) => {
       event.preventDefault();
-      openCart('Консультация по подбору товарного знака');
+      openCart('consult');
     });
+  });
+  document.querySelectorAll('[data-open-registration]').forEach((button) => {
+    button.addEventListener('click', () => openCart('registration'));
   });
   document.querySelectorAll('[data-mktu-select]').forEach((link) => {
     link.addEventListener('click', (event) => {
@@ -364,13 +536,14 @@ function bindControls() {
 function bindForms() {
   document.querySelector('[data-lead-form]').addEventListener('submit', (event) => {
     event.preventDefault();
-    document.querySelector('[data-lead-status]').textContent = 'Заявка собрана локально. Следующий шаг - подключить отправку в PatentVsem.';
+    document.querySelector('[data-lead-status]').textContent = 'Перенаправляем в ПатентВсем...';
+    redirectToPatentvsem(state.action, getCartPayload(event.currentTarget));
   });
 
   document.querySelector('[data-place-form]').addEventListener('submit', (event) => {
     event.preventDefault();
-    event.currentTarget.reset();
-    document.querySelector('[data-place-status]').textContent = 'Заявка на размещение собрана локально.';
+    document.querySelector('[data-place-status]').textContent = 'Перенаправляем в ПатентВсем...';
+    redirectToPatentvsem('place', getPlacePayload(event.currentTarget));
   });
 
   const adminForm = document.querySelector('[data-admin-form]');
@@ -404,11 +577,14 @@ function bindForms() {
     saveList(customKey, custom);
     event.currentTarget.reset();
     document.querySelector('[data-admin-status]').textContent = 'Знак добавлен в локальный каталог.';
-    classFilter.querySelectorAll('option:not(:first-child)').forEach((option) => option.remove());
-    businessFilter.querySelectorAll('option:not(:first-child)').forEach((option) => option.remove());
-    renderFilters();
+    refreshFilters();
     renderCatalog();
+    renderAdminList();
   });
+
+  if (exportCustomButton) {
+    exportCustomButton.addEventListener('click', exportCustomCards);
+  }
 }
 
 renderFilters();
@@ -416,3 +592,4 @@ bindControls();
 bindForms();
 updateCart();
 renderCatalog();
+renderAdminList();

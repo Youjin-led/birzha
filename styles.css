@@ -971,6 +971,76 @@ textarea {
   align-items: center;
 }
 
+.admin-manager {
+  grid-column: 2;
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border-radius: var(--radius);
+  background: #ffffff;
+  color: #141414;
+}
+
+.admin-manager-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: start;
+}
+
+.admin-manager h3 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.admin-manager p {
+  margin: 6px 0 0;
+  color: #666666;
+  font-size: 14px;
+}
+
+.admin-list {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  background: #f7f7f7;
+}
+
+.admin-item div {
+  display: grid;
+  gap: 4px;
+}
+
+.admin-item span,
+.admin-empty {
+  color: #666666;
+  font-size: 13px;
+}
+
+.admin-item button {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid #141414;
+  border-radius: 8px;
+  background: #ffffff;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.admin-manager .button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .faq-section {
   width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
@@ -1167,6 +1237,44 @@ textarea {
   background: transparent;
   color: var(--danger);
   cursor: pointer;
+}
+
+.cart-class-picker {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.cart-class-picker > span {
+  color: #666666;
+  font-size: 13px;
+}
+
+.cart-class-picker > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cart-class-picker label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 30px;
+  padding: 4px 9px;
+  border: 1px solid #141414;
+  border-radius: 8px;
+  background: #fff705;
+  color: #141414;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.cart-class-picker input {
+  width: 14px;
+  height: 14px;
+  accent-color: #141414;
 }
 
 .site-footer {
@@ -2482,6 +2590,19 @@ body .request-section .request-form .privacy-consent a {
 }
 
 @media (max-width: 640px) {
+  .admin-manager {
+    grid-column: auto;
+  }
+
+  .admin-manager-head,
+  .admin-item {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-item button {
+    width: 100%;
+  }
+
   .promo-sale {
     border-radius: 18px;
   }

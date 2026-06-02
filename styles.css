@@ -2620,3 +2620,343 @@ body .request-section .request-form .privacy-consent a {
     font-size: 16px;
   }
 }
+
+/* Designer polish pass */
+html {
+  scroll-padding-top: 128px;
+}
+
+section[id],
+.promo-sale[id] {
+  scroll-margin-top: 128px;
+}
+
+.site-header {
+  min-height: 88px;
+  box-shadow: 0 10px 34px rgba(20, 20, 20, 0.08);
+}
+
+.main-nav {
+  align-items: center;
+}
+
+.main-nav a {
+  padding: 8px 0;
+}
+
+.hero {
+  min-height: 590px;
+  padding-top: 60px;
+  padding-bottom: 76px;
+  border-radius: 18px;
+}
+
+.hero h1,
+.service-heading h2,
+.deal-copy h2,
+.mktu-head h2,
+.request-section h2,
+.admin-section h2,
+.faq-head h2,
+.footer-brand h2 {
+  letter-spacing: 0;
+}
+
+.hero h1 {
+  font-size: 52px;
+  line-height: 1.12;
+}
+
+.hero p:not(.eyebrow) {
+  max-width: 560px;
+  font-size: 20px;
+}
+
+.hero .hero-note {
+  max-width: 590px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.5);
+  color: #141414;
+}
+
+.hero-actions {
+  display: grid;
+  grid-template-columns: fit-content(260px) fit-content(360px);
+  align-items: center;
+  gap: 10px 12px;
+}
+
+.hero-actions .button {
+  justify-content: center;
+}
+
+.hero-actions .button-accent {
+  background: #141414;
+  border-color: #141414;
+  color: #ffffff;
+  box-shadow: none;
+}
+
+.hero-actions .button-ghost {
+  min-height: 42px;
+  padding: 0 14px;
+  border-color: rgba(20, 20, 20, 0.42);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.hero-actions .button-ghost:last-child {
+  grid-column: 1 / -1;
+  width: fit-content;
+}
+
+.hero-logo-tile {
+  border-color: rgba(20, 20, 20, 0.18);
+  box-shadow: 0 14px 34px rgba(20, 20, 20, 0.16);
+}
+
+.service-heading {
+  top: 128px;
+}
+
+.service-heading h2,
+.deal-copy h2,
+.mktu-head h2 {
+  font-size: 46px;
+  line-height: 1.12;
+}
+
+.service-grid,
+.benefit-grid {
+  gap: 12px;
+}
+
+.service-grid article,
+.benefit-grid article {
+  min-height: 118px;
+  padding: 20px 22px;
+  border-color: rgba(20, 20, 20, 0.1);
+  box-shadow: 0 14px 34px rgba(20, 20, 20, 0.04);
+}
+
+.benefit-grid article::after {
+  content: none;
+}
+
+.service-grid h3,
+.benefit-grid h3 {
+  font-size: 23px;
+  line-height: 1.22;
+}
+
+.service-grid p,
+.benefit-grid p {
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.cart-class-picker label {
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 20, 0.08);
+}
+
+@media (max-width: 980px) {
+  html {
+    scroll-padding-top: 152px;
+  }
+
+  section[id],
+  .promo-sale[id] {
+    scroll-margin-top: 152px;
+  }
+
+  .site-header {
+    grid-template-columns: auto 1fr;
+    gap: 10px 16px;
+  }
+
+  .brand {
+    grid-column: 1;
+  }
+
+  .header-cart {
+    grid-column: 2;
+    justify-self: end;
+  }
+
+  .main-nav {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    padding: 2px 0 4px;
+    gap: 8px;
+    scrollbar-width: none;
+  }
+
+  .main-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .main-nav a {
+    flex: 0 0 auto;
+    padding: 7px 10px;
+    border: 1px solid rgba(20, 20, 20, 0.28);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.22);
+    font-size: 13px;
+    line-height: 1;
+  }
+
+  .service-heading {
+    position: static;
+  }
+
+  .service-band {
+    gap: 26px;
+  }
+
+  .service-heading h2,
+  .deal-copy h2,
+  .mktu-head h2 {
+    font-size: 38px;
+  }
+}
+
+@media (max-width: 640px) {
+  html {
+    scroll-padding-top: 164px;
+  }
+
+  section[id],
+  .promo-sale[id] {
+    scroll-margin-top: 164px;
+  }
+
+  .site-header {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 16px;
+  }
+
+  .brand,
+  .header-cart,
+  .main-nav {
+    grid-column: 1;
+  }
+
+  .brand {
+    justify-content: center;
+  }
+
+  .header-cart {
+    justify-self: stretch;
+    min-height: 40px;
+  }
+
+  .main-nav {
+    display: flex;
+    margin: 0 -16px;
+    padding: 0 16px 2px;
+  }
+
+  .hero {
+    margin-top: 24px;
+    margin-bottom: 44px;
+    gap: 22px;
+    padding: 28px 18px 30px;
+  }
+
+  .hero h1 {
+    font-size: 36px;
+    line-height: 1.14;
+  }
+
+  .hero h1 span {
+    white-space: normal;
+  }
+
+  .hero p:not(.eyebrow) {
+    margin-top: 18px;
+    font-size: 18px;
+  }
+
+  .hero-actions {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .hero-actions .button,
+  .hero-actions .button-ghost:last-child {
+    width: 100%;
+  }
+
+  .hero-logo-board {
+    min-height: 300px;
+  }
+
+  .proof-strip {
+    gap: 10px;
+  }
+
+  .proof-strip div {
+    padding: 20px 22px;
+  }
+
+  .proof-strip strong {
+    font-size: 34px;
+  }
+
+  .info-band,
+  .service-band,
+  .deal-section,
+  .mktu-section,
+  .request-section,
+  .admin-section,
+  .faq-section {
+    padding-top: 58px;
+    padding-bottom: 58px;
+  }
+
+  .info-band h2,
+  .service-heading h2,
+  .deal-copy h2,
+  .mktu-head h2,
+  .request-section h2,
+  .admin-section h2,
+  .faq-head h2 {
+    font-size: 34px;
+    line-height: 1.12;
+  }
+
+  .service-grid article,
+  .benefit-grid article {
+    grid-template-columns: 64px 1fr;
+    gap: 8px 16px;
+    padding: 18px;
+  }
+
+  .service-grid h3,
+  .benefit-grid h3 {
+    font-size: 22px;
+  }
+
+  .service-grid p,
+  .benefit-grid p {
+    font-size: 15px;
+  }
+
+  .modal-panel {
+    padding: 22px 18px;
+  }
+
+  .cart-item {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-class-picker label {
+    min-height: 34px;
+    padding: 5px 10px;
+  }
+}

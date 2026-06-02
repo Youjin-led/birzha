@@ -233,6 +233,20 @@ function redirectToPatentvsem(action, payload = {}) {
   window.location.href = buildPatentvsemUrl(action, payload);
 }
 
+function getHeaderOffset() {
+  const header = document.querySelector('.site-header');
+  return (header?.getBoundingClientRect().height || 0) + 18;
+}
+
+function scrollToTarget(target, updateHash = true, behavior = 'smooth') {
+  if (!target) return;
+  const top = target.getBoundingClientRect().top + window.pageYOffset - getHeaderOffset();
+  window.scrollTo({ top: Math.max(0, top), behavior });
+  if (updateHash && target.id) {
+    history.pushState(null, '', `#${target.id}`);
+  }
+}
+
 function getCartPayload(form) {
   const data = new FormData(form);
   const items = getCartItems();
@@ -524,7 +538,16 @@ function bindControls() {
       state.page = 1;
       classFilter.value = state.classFilter;
       renderCatalog();
-      document.querySelector('#catalog').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      scrollToTarget(document.querySelector('#catalog'));
+    });
+  });
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      if (link.matches('[data-open-lead], [data-mktu-select]')) return;
+      const target = document.querySelector(link.getAttribute('href'));
+      if (!target) return;
+      event.preventDefault();
+      scrollToTarget(target);
     });
   });
   document.querySelector('[data-close-cart]').addEventListener('click', closeCart);
@@ -593,3 +616,16 @@ bindForms();
 updateCart();
 renderCatalog();
 renderAdminList();
+
+if (window.location.hash) {
+  [80, 450].forEach((delay) => {
+    window.setTimeout(() => {
+      scrollToTarget(document.querySelector(window.location.hash), false, 'auto');
+    }, delay);
+  });
+  window.addEventListener('load', () => {
+    window.setTimeout(() => {
+      scrollToTarget(document.querySelector(window.location.hash), false, 'auto');
+    }, 700);
+  });
+}

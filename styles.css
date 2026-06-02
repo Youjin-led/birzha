@@ -570,8 +570,8 @@ textarea {
 
 .tm-logo img {
   display: block;
-  width: min(210px, calc(100% - 38px));
-  max-height: 96px;
+  width: min(230px, calc(100% - 42px));
+  height: 96px;
   object-fit: contain;
   border-radius: 6px;
 }
@@ -1741,6 +1741,8 @@ textarea {
 
 .tm-logo img {
   background: #ffffff;
+  padding: 8px;
+  border: 1px solid rgba(20, 20, 20, 0.18);
 }
 
 .favorite-button {

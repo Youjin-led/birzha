@@ -36,6 +36,8 @@ const sourceTrademarks = [
   { id: '906596', classes: [1, 2, 6, 8, 10, 13, 15, 16, 17, 19, 22, 23, 24, 26, 27, 28, 29, 31, 32, 33, 37, 38, 39, 40, 41, 44], price: 'от 100 000 руб. за класс', minPrice: 100000, discount: false, business: ['еда', 'строительство', 'логистика', 'обучение'] }
 ];
 
+const sourceTrademarkIds = new Set(sourceTrademarks.map((item) => item.id));
+
 const state = {
   search: '',
   classFilter: '',
@@ -83,6 +85,7 @@ function allTrademarks() {
   return [...sourceTrademarks, ...custom].map((item, index) => ({
     title: item.title || `Знак №${item.id}`,
     logo: item.logo || makeLogoText(item, index),
+    image: item.image || (sourceTrademarkIds.has(item.id) ? `assets/catalog/tm-${item.id}.jpg` : undefined),
     registry: item.registry || `${registryBase}${encodeURIComponent(item.id)}`,
     order: index + 1,
     ...item

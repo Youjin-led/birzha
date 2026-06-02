@@ -2040,6 +2040,15 @@ textarea {
   color: #141414;
 }
 
+.hero + .promo-sale {
+  margin-top: -42px;
+  margin-bottom: 54px;
+}
+
+.promo-sale + .proof-strip {
+  margin-top: 0;
+}
+
 .promo-sale .eyebrow {
   color: #141414;
 }
@@ -2112,8 +2121,12 @@ body .request-section .request-form .privacy-consent a {
 
 @media (max-width: 640px) {
   .promo-sale {
-    margin-top: 24px;
     border-radius: 18px;
+  }
+
+  .hero + .promo-sale {
+    margin-top: -22px;
+    margin-bottom: 34px;
   }
 
   .promo-sale h2 {

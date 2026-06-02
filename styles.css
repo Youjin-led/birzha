@@ -2124,6 +2124,245 @@ textarea {
   color: #fff705;
 }
 
+/* Hero trademark logos */
+.hero-logo-board {
+  position: relative;
+  width: min(470px, 100%);
+  min-height: 350px;
+  margin-left: auto;
+}
+
+.hero-logo-board::before {
+  content: "";
+  position: absolute;
+  left: 30px;
+  right: 10px;
+  top: 54px;
+  bottom: 42px;
+  border: 1px solid rgba(20, 20, 20, 0.18);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 80% 18%, rgba(255, 247, 5, 0.52), transparent 30%),
+    rgba(255, 255, 255, 0.42);
+  box-shadow: 14px 14px 0 rgba(20, 20, 20, 0.12);
+  transform: rotate(-2deg);
+  z-index: 0;
+}
+
+.hero-logo-board::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 16px;
+  width: 150px;
+  height: 150px;
+  border: 1px solid rgba(20, 20, 20, 0.14);
+  border-radius: 24px;
+  transform: rotate(9deg);
+  z-index: 1;
+}
+
+.hero-logo-tile {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  padding: 10px;
+  border: 1px solid #cfcfcf;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 16px 34px rgba(20, 20, 20, 0.18);
+}
+
+.hero-logo-tile img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.logo-key {
+  left: 18px;
+  top: 52px;
+  width: 78px;
+  height: 74px;
+  transform: rotate(-5deg);
+  z-index: 3;
+}
+
+.logo-building {
+  left: 96px;
+  top: 26px;
+  width: 124px;
+  height: 104px;
+  transform: rotate(1deg);
+  z-index: 4;
+}
+
+.logo-cubes {
+  right: 104px;
+  top: 64px;
+  width: 96px;
+  height: 76px;
+  transform: rotate(-2deg);
+  z-index: 3;
+}
+
+.logo-bars {
+  right: 12px;
+  top: 42px;
+  width: 78px;
+  height: 86px;
+  transform: rotate(3deg);
+  z-index: 5;
+}
+
+.logo-ervilen {
+  right: 30px;
+  top: 140px;
+  width: 330px;
+  height: 86px;
+  transform: rotate(-0.5deg);
+  z-index: 7;
+}
+
+.logo-rotonda {
+  left: 0;
+  bottom: 42px;
+  width: 218px;
+  height: 78px;
+  transform: rotate(1.2deg);
+  z-index: 6;
+}
+
+.logo-geraldin {
+  right: 4px;
+  bottom: 18px;
+  width: 238px;
+  height: 80px;
+  transform: rotate(-1.5deg);
+  z-index: 8;
+}
+
+@media (min-width: 981px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr) minmax(430px, 0.56fr);
+  }
+
+  .hero h1 {
+    max-width: 660px;
+    font-size: clamp(40px, 3.55vw, 52px);
+  }
+}
+
+@media (max-width: 980px) {
+  .hero-visual {
+    min-height: auto;
+  }
+
+  .brand-stage {
+    width: 100%;
+    min-height: auto;
+  }
+
+  .hero-logo-board {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  }
+
+  .hero-copy,
+  .hero-visual {
+    width: 100%;
+  }
+
+  .hero p:not(.eyebrow) {
+    max-width: 100%;
+  }
+
+  .hero-logo-board {
+    width: 100%;
+    min-height: 330px;
+  }
+
+  .hero-logo-board::before {
+    left: 20px;
+    right: 10px;
+    top: 48px;
+    bottom: 36px;
+    border-radius: 22px;
+    box-shadow: 10px 10px 0 rgba(20, 20, 20, 0.12);
+  }
+
+  .hero-logo-board::after {
+    left: 0;
+    top: 26px;
+    width: 104px;
+    height: 104px;
+    border-radius: 18px;
+  }
+
+  .hero-logo-tile {
+    padding: 7px;
+    border-radius: 7px;
+    box-shadow: 0 10px 22px rgba(20, 20, 20, 0.16);
+  }
+
+  .logo-key {
+    left: 4px;
+    top: 56px;
+    width: 64px;
+    height: 62px;
+  }
+
+  .logo-building {
+    left: 62px;
+    top: 30px;
+    width: 102px;
+    height: 84px;
+  }
+
+  .logo-cubes {
+    right: 82px;
+    top: 72px;
+    width: 78px;
+    height: 64px;
+  }
+
+  .logo-bars {
+    right: 0;
+    top: 50px;
+    width: 64px;
+    height: 74px;
+  }
+
+  .logo-ervilen {
+    right: 8px;
+    top: 144px;
+    width: 270px;
+    height: 76px;
+  }
+
+  .logo-rotonda {
+    left: 0;
+    bottom: 58px;
+    width: 166px;
+    height: 66px;
+  }
+
+  .logo-geraldin {
+    right: 0;
+    bottom: 36px;
+    width: 178px;
+    height: 66px;
+  }
+}
+
 .request-section,
 .request-section h2,
 .request-section .eyebrow,

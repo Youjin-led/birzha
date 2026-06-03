@@ -478,10 +478,19 @@ function filterCatalogByMktu(id) {
 
 function matchesSearch(item, query) {
   if (!query) return true;
+  if (/^\d{1,2}$/.test(query)) {
+    const classQuery = Number(query);
+    if (classQuery >= 1 && classQuery <= 45) {
+      return item.classes.includes(classQuery);
+    }
+  }
   const haystack = [
     item.title,
+    item.logo,
     item.id,
     item.price,
+    item.description,
+    item.registry,
     item.business.join(' '),
     item.classes.join(' ')
   ].join(' ');
@@ -672,11 +681,14 @@ function bindControls() {
     adminSection.hidden = false;
   }
 
-  searchInput?.addEventListener('input', (event) => {
+  const updateSearch = (event) => {
     state.search = event.target.value.trim();
     state.page = 1;
     renderCatalog();
-  });
+  };
+  searchInput?.addEventListener('input', updateSearch);
+  searchInput?.addEventListener('search', updateSearch);
+  searchInput?.addEventListener('change', updateSearch);
   classFilter?.addEventListener('change', (event) => {
     state.classFilter = event.target.value;
     state.page = 1;
@@ -821,7 +833,8 @@ function bindForms() {
     custom.push(item);
     saveList(customKey, custom);
     event.currentTarget.reset();
-    document.querySelector('[data-admin-status]').textContent = 'Знак добавлен в локальный каталог.';
+    const status = document.querySelector('[data-admin-status]');
+    if (status) status.textContent = 'Знак добавлен в локальный каталог.';
     refreshFilters();
     renderCatalog();
     renderAdminList();
@@ -842,16 +855,8 @@ function initFromUrl() {
   }
 }
 
-renderFilters();
-initFromUrl();
-renderMktuDirectory();
-bindControls();
-bindForms();
-updateCart();
-renderCatalog();
-renderAdminList();
-
-if (window.location.hash) {
+function restoreHashPosition() {
+  if (!window.location.hash) return;
   [80, 450].forEach((delay) => {
     window.setTimeout(() => {
       scrollToTarget(document.querySelector(window.location.hash), false, 'auto');
@@ -863,3 +868,17 @@ if (window.location.hash) {
     }, 700);
   });
 }
+
+function initApp() {
+  renderFilters();
+  initFromUrl();
+  renderMktuDirectory();
+  bindControls();
+  bindForms();
+  updateCart();
+  renderCatalog();
+  renderAdminList();
+  restoreHashPosition();
+}
+
+initApp();

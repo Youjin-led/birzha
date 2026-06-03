@@ -30,17 +30,6 @@ section[id],
   scroll-margin-top: 112px;
 }
 
-.home-page .info-band,
-.home-page .service-band,
-.home-page .deal-section,
-.home-page .mktu-section,
-.home-page .catalog-shell,
-.home-page .request-section,
-.home-page .admin-section,
-.home-page .faq-section {
-  display: none;
-}
-
 body {
   margin: 0;
   background:
@@ -720,7 +709,6 @@ textarea {
 
 .info-band h1,
 .info-band h2,
-.request-section h1,
 .request-section h1,
 .request-section h2,
 .admin-section h2 {

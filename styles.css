@@ -30,6 +30,17 @@ section[id],
   scroll-margin-top: 112px;
 }
 
+.home-page .info-band,
+.home-page .service-band,
+.home-page .deal-section,
+.home-page .mktu-section,
+.home-page .catalog-shell,
+.home-page .request-section,
+.home-page .admin-section,
+.home-page .faq-section {
+  display: none;
+}
+
 body {
   margin: 0;
   background:
@@ -409,6 +420,7 @@ h1 {
   font-size: clamp(34px, 5vw, 68px);
 }
 
+.catalog-head h1,
 .catalog-head h2 {
   font-size: clamp(32px, 4.5vw, 58px);
 }
@@ -706,7 +718,10 @@ textarea {
   border-bottom: 1px solid var(--line);
 }
 
+.info-band h1,
 .info-band h2,
+.request-section h1,
+.request-section h1,
 .request-section h2,
 .admin-section h2 {
   font-size: clamp(28px, 4vw, 46px);
@@ -752,6 +767,7 @@ textarea {
   align-self: start;
 }
 
+.service-heading h1,
 .service-heading h2 {
   font-size: clamp(30px, 4vw, 52px);
 }
@@ -810,7 +826,9 @@ textarea {
   border-top: 1px solid var(--line);
 }
 
+.deal-copy h1,
 .deal-copy h2,
+.mktu-head h1,
 .mktu-head h2 {
   font-size: clamp(30px, 4vw, 52px);
 }
@@ -1056,6 +1074,7 @@ textarea {
   margin-bottom: 24px;
 }
 
+.faq-head h1,
 .faq-head h2 {
   font-size: clamp(32px, 4.5vw, 58px);
 }
@@ -1791,13 +1810,20 @@ label,
   color: #ffffff;
 }
 
+.catalog-head h1,
 .catalog-head h2,
+.info-band h1,
 .info-band h2,
+.service-heading h1,
 .service-heading h2,
+.deal-copy h1,
 .deal-copy h2,
+.mktu-head h1,
 .mktu-head h2,
+.request-section h1,
 .request-section h2,
 .admin-section h2,
+.faq-head h1,
 .faq-head h2,
 .footer-brand h2 {
   color: #ffffff;
@@ -1805,11 +1831,17 @@ label,
   letter-spacing: -0.025em;
 }
 
+.catalog-head h1::first-line,
 .catalog-head h2::first-line,
+.info-band h1::first-line,
 .info-band h2::first-line,
+.service-heading h1::first-line,
 .service-heading h2::first-line,
+.deal-copy h1::first-line,
 .deal-copy h2::first-line,
+.mktu-head h1::first-line,
 .mktu-head h2::first-line,
+.faq-head h1::first-line,
 .faq-head h2::first-line {
   color: #fff705;
 }
@@ -2521,11 +2553,13 @@ body .request-section,
 body .request-section .request-copy,
 body .request-section .request-copy *,
 body .request-section .request-copy .eyebrow,
+body .request-section .request-copy h1,
 body .request-section .request-copy h2,
 body .request-section .request-copy p {
   color: #141414 !important;
 }
 
+body .request-section .request-copy h1,
 body .request-section .request-copy h2 {
   text-shadow: none;
 }
@@ -2652,11 +2686,16 @@ section[id],
 }
 
 .hero h1,
+.service-heading h1,
 .service-heading h2,
+.deal-copy h1,
 .deal-copy h2,
+.mktu-head h1,
 .mktu-head h2,
+.request-section h1,
 .request-section h2,
 .admin-section h2,
+.faq-head h1,
 .faq-head h2,
 .footer-brand h2 {
   letter-spacing: 0;
@@ -2718,8 +2757,11 @@ section[id],
   top: 128px;
 }
 
+.service-heading h1,
 .service-heading h2,
+.deal-copy h1,
 .deal-copy h2,
+.mktu-head h1,
 .mktu-head h2 {
   font-size: 46px;
   line-height: 1.12;
@@ -2816,8 +2858,11 @@ section[id],
     gap: 26px;
   }
 
+  .service-heading h1,
   .service-heading h2,
+  .deal-copy h1,
   .deal-copy h2,
+  .mktu-head h1,
   .mktu-head h2 {
     font-size: 38px;
   }
@@ -2919,12 +2964,18 @@ section[id],
     padding-bottom: 58px;
   }
 
+  .info-band h1,
   .info-band h2,
+  .service-heading h1,
   .service-heading h2,
+  .deal-copy h1,
   .deal-copy h2,
+  .mktu-head h1,
   .mktu-head h2,
+  .request-section h1,
   .request-section h2,
   .admin-section h2,
+  .faq-head h1,
   .faq-head h2 {
     font-size: 34px;
     line-height: 1.12;

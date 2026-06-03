@@ -466,9 +466,14 @@ function selectMktuClass(id, shouldScroll = false) {
 function filterCatalogByMktu(id) {
   state.classFilter = String(id);
   state.page = 1;
-  classFilter.value = state.classFilter;
+  if (classFilter) classFilter.value = state.classFilter;
   renderCatalog();
-  scrollToTarget(document.querySelector('#catalog'));
+  const catalog = document.querySelector('#catalog');
+  if (catalog) {
+    scrollToTarget(catalog);
+  } else {
+    window.location.href = `catalog.html?mktu=${encodeURIComponent(state.classFilter)}`;
+  }
 }
 
 function matchesSearch(item, query) {
@@ -505,6 +510,7 @@ function filteredTrademarks() {
 }
 
 function renderFilters() {
+  if (!classFilter || !businessFilter) return;
   const classes = [...new Set(allTrademarks().flatMap((item) => item.classes))].sort((a, b) => a - b);
   const businesses = [...new Set(allTrademarks().flatMap((item) => item.business))].sort((a, b) => a.localeCompare(b, 'ru'));
 
@@ -513,12 +519,14 @@ function renderFilters() {
 }
 
 function refreshFilters() {
+  if (!classFilter || !businessFilter) return;
   classFilter.querySelectorAll('option:not(:first-child)').forEach((option) => option.remove());
   businessFilter.querySelectorAll('option:not(:first-child)').forEach((option) => option.remove());
   renderFilters();
 }
 
 function renderCatalog() {
+  if (!grid || !template || !resultCount || !pagination) return;
   const list = filteredTrademarks();
   const pageCount = Math.max(1, Math.ceil(list.length / state.perPage));
   if (state.page > pageCount) state.page = pageCount;
@@ -560,6 +568,7 @@ function renderCatalog() {
 }
 
 function renderPagination(pageCount) {
+  if (!pagination) return;
   pagination.innerHTML = '';
   if (pageCount < 2) return;
   for (let index = 1; index <= pageCount; index += 1) {
@@ -570,7 +579,7 @@ function renderPagination(pageCount) {
     button.addEventListener('click', () => {
       state.page = index;
       renderCatalog();
-      document.querySelector('#catalog').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelector('#catalog')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
     pagination.appendChild(button);
   }
@@ -603,7 +612,8 @@ function removeFromCart(id) {
 }
 
 function updateCart() {
-  cartCount.textContent = state.cart.length;
+  if (cartCount) cartCount.textContent = state.cart.length;
+  if (!cartItems || !intentInput || !selectedInput) return;
   const items = getCartItems();
   intentInput.value = state.intent;
   selectedInput.value = [
@@ -641,6 +651,7 @@ function updateCart() {
 }
 
 function openCart(action = state.action) {
+  if (!modal || !modalTitle) return;
   state.action = action;
   state.intent = leadActions[action]?.label || state.intent;
   modalTitle.textContent = leadActions[action]?.title || 'Заявка на товарные знаки';
@@ -650,6 +661,7 @@ function openCart(action = state.action) {
 }
 
 function closeCart() {
+  if (!modal) return;
   modal.hidden = true;
   document.body.style.overflow = '';
 }
@@ -660,43 +672,43 @@ function bindControls() {
     adminSection.hidden = false;
   }
 
-  searchInput.addEventListener('input', (event) => {
+  searchInput?.addEventListener('input', (event) => {
     state.search = event.target.value.trim();
     state.page = 1;
     renderCatalog();
   });
-  classFilter.addEventListener('change', (event) => {
+  classFilter?.addEventListener('change', (event) => {
     state.classFilter = event.target.value;
     state.page = 1;
     renderCatalog();
   });
-  discountFilter.addEventListener('change', (event) => {
+  discountFilter?.addEventListener('change', (event) => {
     state.discountFilter = event.target.value;
     state.page = 1;
     renderCatalog();
   });
-  businessFilter.addEventListener('change', (event) => {
+  businessFilter?.addEventListener('change', (event) => {
     state.businessFilter = event.target.value;
     state.page = 1;
     renderCatalog();
   });
-  sortSelect.addEventListener('change', (event) => {
+  sortSelect?.addEventListener('change', (event) => {
     state.sort = event.target.value;
     state.page = 1;
     renderCatalog();
   });
-  document.querySelector('[data-reset]').addEventListener('click', () => {
+  document.querySelector('[data-reset]')?.addEventListener('click', () => {
     state.search = '';
     state.classFilter = '';
     state.discountFilter = '';
     state.businessFilter = '';
     state.sort = 'default';
     state.page = 1;
-    searchInput.value = '';
-    classFilter.value = '';
-    discountFilter.value = '';
-    businessFilter.value = '';
-    sortSelect.value = 'default';
+    if (searchInput) searchInput.value = '';
+    if (classFilter) classFilter.value = '';
+    if (discountFilter) discountFilter.value = '';
+    if (businessFilter) businessFilter.value = '';
+    if (sortSelect) sortSelect.value = 'default';
     renderCatalog();
   });
   document.querySelectorAll('[data-open-cart]').forEach((button) => {
@@ -739,9 +751,14 @@ function bindControls() {
       event.preventDefault();
       state.classFilter = event.currentTarget.dataset.mktuSelect;
       state.page = 1;
-      classFilter.value = state.classFilter;
+      if (classFilter) classFilter.value = state.classFilter;
       renderCatalog();
-      scrollToTarget(document.querySelector('#catalog'));
+      const catalog = document.querySelector('#catalog');
+      if (catalog) {
+        scrollToTarget(catalog);
+      } else {
+        window.location.href = `catalog.html?mktu=${encodeURIComponent(state.classFilter)}`;
+      }
     });
   });
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
@@ -753,22 +770,24 @@ function bindControls() {
       scrollToTarget(target);
     });
   });
-  document.querySelector('[data-close-cart]').addEventListener('click', closeCart);
-  modal.addEventListener('click', (event) => {
+  document.querySelector('[data-close-cart]')?.addEventListener('click', closeCart);
+  modal?.addEventListener('click', (event) => {
     if (event.target === modal) closeCart();
   });
 }
 
 function bindForms() {
-  document.querySelector('[data-lead-form]').addEventListener('submit', (event) => {
+  document.querySelector('[data-lead-form]')?.addEventListener('submit', (event) => {
     event.preventDefault();
-    document.querySelector('[data-lead-status]').textContent = 'Перенаправляем в ПатентВсем...';
+    const status = document.querySelector('[data-lead-status]');
+    if (status) status.textContent = 'Перенаправляем в ПатентВсем...';
     redirectToPatentvsem(state.action, getCartPayload(event.currentTarget));
   });
 
-  document.querySelector('[data-place-form]').addEventListener('submit', (event) => {
+  document.querySelector('[data-place-form]')?.addEventListener('submit', (event) => {
     event.preventDefault();
-    document.querySelector('[data-place-status]').textContent = 'Перенаправляем в ПатентВсем...';
+    const status = document.querySelector('[data-place-status]');
+    if (status) status.textContent = 'Перенаправляем в ПатентВсем...';
     redirectToPatentvsem('place', getPlacePayload(event.currentTarget));
   });
 
@@ -813,7 +832,18 @@ function bindForms() {
   }
 }
 
+function initFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const mktu = params.get('mktu');
+  if (mktu && mktuClasses.some((item) => String(item.id) === String(mktu))) {
+    state.classFilter = String(mktu);
+    state.mktuActive = Number(mktu);
+    if (classFilter) classFilter.value = state.classFilter;
+  }
+}
+
 renderFilters();
+initFromUrl();
 renderMktuDirectory();
 bindControls();
 bindForms();

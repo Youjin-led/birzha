@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <title>Классы МКТУ для товарного знака - ПатентВсем</title>
+    <meta name="description" content="Интерактивный справочник МКТУ: частые классы, поиск по товарам и услугам, пояснения и переход в каталог готовых знаков.">
+    <link rel="icon" href="https://static.tildacdn.com/tild3936-6536-4264-a139-376339393034/LOGO.png">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="ПатентВсем">
+        <img class="brand-logo" src="https://static.tildacdn.com/tild3936-6536-4264-a139-376339393034/LOGO.png" alt="ПатентВсем">
+      </a>
+      <nav class="main-nav" aria-label="Основная навигация">
+        <a href="about.html#how">Как это работает</a>
+        <a href="about.html#team">Кто ведет сделку</a>
+        <a href="mktu.html">МКТУ</a>
+        <a href="catalog.html">Каталог</a>
+        <a href="faq.html">FAQ</a>
+        <a href="place.html">Разместить знак</a>
+      </nav>
+      <button class="header-cart" type="button" data-open-cart>
+        <span>Заявка</span>
+        <strong data-cart-count>0</strong>
+      </button>
+    </header>
+
+    <main>
+      <section class="mktu-section" id="mktu">
+        <div class="mktu-head">
+          <div>
+            <p class="eyebrow">Подсказка для выбора</p>
+            <h1>Подбор класса МКТУ</h1>
+            <p>Начните с популярных направлений или откройте полный справочник. Нажмите на номер класса, чтобы увидеть пояснения, примеры и товары или услуги.</p>
+          </div>
+          <a class="button button-dark" href="#mktu-directory">Открыть справочник</a>
+        </div>
+        <div class="mktu-layout">
+          <section class="mktu-panel">
+            <div class="mktu-panel-head">
+              <h3>Часто используемые</h3>
+              <p>Быстрый выбор для типовых бизнесов и готовых знаков из каталога.</p>
+            </div>
+            <div class="mktu-grid">
+              <article><button type="button" data-mktu-preview="3">3</button><h3>Косметика и бытовая химия</h3><p>Кремы, шампуни, духи, дезодоранты, чистящие средства.</p></article>
+              <article><button type="button" data-mktu-preview="5">5</button><h3>Фармацевтика и БАДы</h3><p>Лекарства, витамины, пластыри, антисептики, товары гигиены.</p></article>
+              <article><button type="button" data-mktu-preview="9">9</button><h3>Электроника и ПО</h3><p>Приложения, устройства, аксессуары, камеры, приборы, оптика.</p></article>
+              <article><button type="button" data-mktu-preview="25">25</button><h3>Одежда и обувь</h3><p>Повседневная и спортивная одежда, обувь, головные уборы.</p></article>
+              <article><button type="button" data-mktu-preview="30">30</button><h3>Продукты питания</h3><p>Кофе, чай, хлеб, сладости, специи, соусы, крупы.</p></article>
+              <article><button type="button" data-mktu-preview="35">35</button><h3>Реклама и торговля</h3><p>Маркетинг, интернет-магазины, розница, управление бизнесом.</p></article>
+              <article><button type="button" data-mktu-preview="39">39</button><h3>Логистика и доставка</h3><p>Перевозки, хранение, доставка, упаковка и организация поездок.</p></article>
+              <article><button type="button" data-mktu-preview="41">41</button><h3>Образование и спорт</h3><p>Курсы, школы, фитнес-клубы, мероприятия и развлечения.</p></article>
+              <article><button type="button" data-mktu-preview="42">42</button><h3>IT, наука и дизайн</h3><p>Разработка ПО, сайты, SaaS, дизайн, исследования и экспертиза.</p></article>
+              <article><button type="button" data-mktu-preview="43">43</button><h3>Общепит и отели</h3><p>Рестораны, доставка еды, гостиницы, хостелы, кейтеринг.</p></article>
+              <article><button type="button" data-mktu-preview="44">44</button><h3>Медицина и красота</h3><p>Клиники, стоматологии, салоны красоты, SPA, ветеринария.</p></article>
+            </div>
+          </section>
+          <section class="mktu-panel mktu-finder" id="mktu-directory">
+            <div class="mktu-panel-head">
+              <h3>Все классы МКТУ</h3>
+              <p>Введите товар или услугу, либо выберите номер класса вручную.</p>
+            </div>
+            <label class="mktu-search">
+              <span>Поиск по товару или услуге</span>
+              <input type="search" placeholder="Например: одежда, доставка, приложение" data-mktu-search>
+            </label>
+            <div class="mktu-class-groups">
+              <div>
+                <h4>Товары</h4>
+                <div class="mktu-number-list" data-mktu-goods></div>
+              </div>
+              <div>
+                <h4>Услуги</h4>
+                <div class="mktu-number-list" data-mktu-services></div>
+              </div>
+            </div>
+            <div class="mktu-search-results" data-mktu-results></div>
+            <article class="mktu-detail" data-mktu-detail></article>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <p class="eyebrow">Патентный отдел</p>
+        <h2>ПатентВсем</h2>
+        <a href="tel:+79689973835">+7 (968) 997-38-35</a>
+        <span>Игорь</span>
+      </div>
+      <div class="footer-details" aria-label="Реквизиты">
+        <div><span>ИП</span><strong>Довлатов Игорь Мамедяревич</strong></div>
+        <div><span>ИНН</span><strong>772612579857</strong></div>
+        <div><span>ОГРН/ОГРНИП</span><strong>319774600637982</strong></div>
+        <div><span>Электронная почта</span><a href="mailto:patentvsem@mail.ru">patentvsem@mail.ru</a></div>
+      </div>
+    </footer>
+
+    <div class="modal" id="lead" data-modal hidden>
+      <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+        <button class="modal-close" type="button" data-close-cart aria-label="Закрыть">x</button>
+        <h2 id="cart-title" data-modal-title>Заявка на товарные знаки</h2>
+        <div data-cart-items class="cart-items"></div>
+        <form class="lead-form" data-lead-form>
+          <label>Имя<input name="name" required></label>
+          <label>Телефон<input name="phone" required inputmode="tel"></label>
+          <label>Email<input name="email" type="email"></label>
+          <label>Комментарий<textarea name="comment" rows="3"></textarea></label>
+          <input type="hidden" name="intent" data-intent-input>
+          <input type="hidden" name="selected" data-selected-input>
+          <label class="privacy-consent">
+            <input type="checkbox" name="privacy" required checked>
+            <span>Нажимая кнопку отправки, вы соглашаетесь с <a href="https://patentvsem.ru/privacy" target="_blank" rel="noopener">политикой обработки персональных данных</a>.</span>
+          </label>
+          <button class="button button-accent" type="submit">Отправить в ПатентВсем</button>
+          <p class="form-note" data-lead-status></p>
+        </form>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

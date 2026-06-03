@@ -1601,8 +1601,8 @@ body {
 .main-nav {
   gap: clamp(16px, 2.4vw, 34px);
   color: #000000;
-  font-size: 14px;
-  font-weight: 800;
+  font-size: 16px;
+  font-weight: 900;
 }
 
 .main-nav a:hover {

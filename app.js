@@ -476,14 +476,55 @@ function filterCatalogByMktu(id) {
   }
 }
 
-function matchesSearch(item, query) {
-  if (!query) return true;
-  if (/^\d{1,2}$/.test(query)) {
-    const classQuery = Number(query);
-    if (classQuery >= 1 && classQuery <= 45) {
-      return item.classes.includes(classQuery);
+function parseCatalogSearch(query) {
+  const classes = [];
+  const textTokens = [];
+  const tokens = String(query || '').split(/[\s,;]+/).filter(Boolean);
+
+  tokens.forEach((token) => {
+    const normalizedToken = normalize(token).replace(/[.:№#-]+$/g, '');
+    if (!normalizedToken || normalizedToken === 'мкту') return;
+
+    const classMatch = normalizedToken.match(/^(?:мкту)?(\d{1,2})$/);
+    if (classMatch) {
+      const classId = Number(classMatch[1]);
+      if (classId >= 1 && classId <= 45 && !classes.includes(classId) && classes.length < 5) {
+        classes.push(classId);
+      }
+      return;
     }
-  }
+
+    textTokens.push(token);
+  });
+
+  return {
+    classes,
+    text: textTokens.join(' ').trim()
+  };
+}
+
+function getClassSearchText(classes) {
+  return classes.map((id) => {
+    const item = getMktuClass(id);
+    if (!item) return String(id);
+    return [
+      item.id,
+      item.title,
+      item.description,
+      item.keywords,
+      ...(item.examples || []),
+      ...(item.includes || []),
+      ...(item.goods || [])
+    ].join(' ');
+  }).join(' ');
+}
+
+function matchesSearch(item, query) {
+  const parsed = parseCatalogSearch(query);
+  if (!parsed.classes.length && !parsed.text) return true;
+  if (!parsed.classes.every((classId) => item.classes.includes(classId))) return false;
+  if (!parsed.text) return true;
+
   const haystack = [
     item.title,
     item.logo,
@@ -492,12 +533,13 @@ function matchesSearch(item, query) {
     item.description,
     item.registry,
     item.business.join(' '),
-    item.classes.join(' ')
+    item.classes.join(' '),
+    getClassSearchText(item.classes)
   ].join(' ');
   const normalizedHaystack = normalize(haystack);
   const translitHaystack = transliterate(haystack);
-  const normalizedQuery = normalize(query);
-  const translitQuery = transliterate(query);
+  const normalizedQuery = normalize(parsed.text);
+  const translitQuery = transliterate(parsed.text);
   return normalizedHaystack.includes(normalizedQuery) || translitHaystack.includes(translitQuery);
 }
 

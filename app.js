@@ -57,6 +57,92 @@ const sourceTrademarks = [
 
 const sourceTrademarkIds = new Set(sourceTrademarks.map((item) => item.id));
 
+const mktuClasses = [
+  { id: 1, type: 'goods', title: 'Химические продукты', description: 'Химикаты для промышленности, науки, фотографии, сельского хозяйства и садоводства.', examples: ['удобрения', 'клеи промышленные', 'химические добавки', 'сырье для производства'], keywords: 'химия удобрения клеи реагенты промышленность' },
+  { id: 2, type: 'goods', title: 'Краски и защитные покрытия', description: 'Краски, лаки, антикоррозийные составы, красители, чернила и смолы.', examples: ['краски', 'лаки', 'морилки', 'чернила для печати'], keywords: 'краска лак покрытие чернила краситель ремонт' },
+  { id: 3, type: 'goods', title: 'Косметика и бытовая химия', description: 'Косметические и туалетные средства, парфюмерия, средства для чистки и ухода.', examples: ['кремы', 'шампуни', 'духи', 'зубные пасты', 'чистящие средства'], keywords: 'косметика шампунь крем духи мыло уборка бытовая химия' },
+  { id: 4, type: 'goods', title: 'Масла, топливо и свечи', description: 'Технические масла, смазки, топливо, осветительные материалы и свечи.', examples: ['бензин', 'моторные масла', 'смазки', 'свечи'], keywords: 'масло топливо бензин свечи смазка' },
+  { id: 5, type: 'goods', title: 'Фармацевтика и БАДы', description: 'Лекарственные препараты, медицинские средства, БАДы, антисептики и товары гигиены.', examples: ['лекарства', 'витамины', 'пластыри', 'дезинфицирующие средства'], keywords: 'лекарство витамины бад аптека пластырь медицина' },
+  { id: 6, type: 'goods', title: 'Металлы и изделия из металла', description: 'Обычные металлы, строительные металлические материалы и небольшие металлические изделия.', examples: ['металлопрокат', 'трубы', 'замки', 'скобяные изделия'], keywords: 'металл трубы замки крепеж строительство' },
+  { id: 7, type: 'goods', title: 'Машины и станки', description: 'Машины, станки, двигатели, насосы, инструменты с механическим приводом.', examples: ['станки', 'насосы', 'компрессоры', 'электроинструмент'], keywords: 'станок машина насос компрессор инструмент оборудование' },
+  { id: 8, type: 'goods', title: 'Ручные инструменты', description: 'Ручные инструменты, ножевые изделия, бритвы и приборы для ухода.', examples: ['ножи', 'ножницы', 'бритвы', 'ручной инструмент'], keywords: 'нож ножницы бритва инструмент маникюр' },
+  { id: 9, type: 'goods', title: 'Электроника и ПО', description: 'Компьютеры, программы, приборы, приложения, носители данных и научное оборудование.', examples: ['приложения', 'смартфоны', 'камеры', 'ПО', 'электронные устройства'], keywords: 'приложение программа софт электроника компьютер камера прибор' },
+  { id: 10, type: 'goods', title: 'Медицинское оборудование', description: 'Хирургические, медицинские, стоматологические и ветеринарные аппараты и инструменты.', examples: ['медицинские приборы', 'стоматологическое оборудование', 'ортопедические изделия'], keywords: 'медицинское оборудование стоматология приборы ортопедия' },
+  { id: 11, type: 'goods', title: 'Освещение, отопление и сантехника', description: 'Приборы для освещения, нагрева, охлаждения, вентиляции, водоснабжения и санитарии.', examples: ['лампы', 'кондиционеры', 'котлы', 'сантехника'], keywords: 'свет лампа отопление кондиционер сантехника вентиляция' },
+  { id: 12, type: 'goods', title: 'Транспорт', description: 'Транспортные средства и аппараты для передвижения по земле, воде или воздуху.', examples: ['автомобили', 'велосипеды', 'запчасти', 'лодки'], keywords: 'авто транспорт велосипед запчасти лодка' },
+  { id: 13, type: 'goods', title: 'Оружие и пиротехника', description: 'Огнестрельное оружие, боеприпасы, взрывчатые вещества и фейерверки.', examples: ['оружие', 'патроны', 'фейерверки'], keywords: 'оружие патроны пиротехника фейерверк' },
+  { id: 14, type: 'goods', title: 'Ювелирные изделия и часы', description: 'Драгоценные металлы, ювелирные изделия, часы и украшения.', examples: ['кольца', 'часы', 'бижутерия', 'драгоценности'], keywords: 'ювелирка часы украшения кольцо браслет' },
+  { id: 15, type: 'goods', title: 'Музыкальные инструменты', description: 'Музыкальные инструменты, аксессуары и принадлежности для музыкантов.', examples: ['гитары', 'пианино', 'струны', 'синтезаторы'], keywords: 'музыка гитара пианино инструмент струны' },
+  { id: 16, type: 'goods', title: 'Бумага, печать и канцелярия', description: 'Бумага, печатная продукция, канцелярские товары, упаковочные материалы.', examples: ['книги', 'блокноты', 'наклейки', 'канцелярия'], keywords: 'бумага книги канцелярия упаковка печать наклейки' },
+  { id: 17, type: 'goods', title: 'Резина, пластмассы и изоляция', description: 'Каучук, резина, пластмассы в производстве, изоляционные и гибкие материалы.', examples: ['уплотнители', 'пластиковые полуфабрикаты', 'изоляция'], keywords: 'резина пластик изоляция уплотнитель' },
+  { id: 18, type: 'goods', title: 'Кожа, сумки и зонты', description: 'Кожа, изделия из кожи, багаж, сумки, кошельки, зонты и трости.', examples: ['сумки', 'рюкзаки', 'кошельки', 'зонты'], keywords: 'сумка рюкзак кошелек кожа зонт' },
+  { id: 19, type: 'goods', title: 'Строительные материалы', description: 'Неметаллические строительные материалы, конструкции, камень, цемент и стекло.', examples: ['плитка', 'цемент', 'окна', 'строительные панели'], keywords: 'стройматериалы плитка цемент окна недвижимость' },
+  { id: 20, type: 'goods', title: 'Мебель и предметы интерьера', description: 'Мебель, зеркала, рамы, изделия из дерева, пластика и аналогичных материалов.', examples: ['мебель', 'матрасы', 'зеркала', 'полки'], keywords: 'мебель интерьер матрас зеркало шкаф' },
+  { id: 21, type: 'goods', title: 'Посуда и товары для дома', description: 'Домашняя утварь, кухонная посуда, контейнеры, стекло, фарфор и щетки.', examples: ['посуда', 'кружки', 'контейнеры', 'щетки'], keywords: 'посуда кухня кружка контейнер дом' },
+  { id: 22, type: 'goods', title: 'Веревки, тенты и мешки', description: 'Канаты, сети, палатки, навесы, мешки и набивочные материалы.', examples: ['тенты', 'сети', 'мешки', 'веревки'], keywords: 'тент сеть мешок веревка палатка' },
+  { id: 23, type: 'goods', title: 'Пряжа и нити', description: 'Пряжа и нити для текстильного использования.', examples: ['пряжа', 'нитки', 'волокна'], keywords: 'пряжа нитки текстиль вязание' },
+  { id: 24, type: 'goods', title: 'Ткани и текстиль', description: 'Ткани, текстильные изделия, постельное белье и бытовой текстиль.', examples: ['ткани', 'пледы', 'постельное белье', 'шторы'], keywords: 'ткань текстиль белье штора плед' },
+  { id: 25, type: 'goods', title: 'Одежда и обувь', description: 'Одежда, обувь, головные уборы и аксессуары для носки.', examples: ['одежда', 'обувь', 'футболки', 'куртки', 'головные уборы'], keywords: 'одежда обувь футболка куртка шапка fashion' },
+  { id: 26, type: 'goods', title: 'Галантерея и украшения для одежды', description: 'Кружева, пуговицы, застежки, искусственные цветы, аксессуары для волос.', examples: ['пуговицы', 'молнии', 'заколки', 'нашивки'], keywords: 'пуговица молния заколка аксессуары одежда' },
+  { id: 27, type: 'goods', title: 'Ковры и покрытия', description: 'Ковры, маты, линолеум, обои и покрытия для полов и стен.', examples: ['ковры', 'линолеум', 'обои', 'коврики'], keywords: 'ковер обои линолеум покрытие пол' },
+  { id: 28, type: 'goods', title: 'Игрушки и спорттовары', description: 'Игры, игрушки, спортивные товары, украшения для праздников.', examples: ['игрушки', 'настольные игры', 'спортинвентарь', 'елочные украшения'], keywords: 'игрушки игры спорт фитнес инвентарь' },
+  { id: 29, type: 'goods', title: 'Мясо, рыба и готовые продукты', description: 'Мясо, рыба, птица, молочные продукты, консервы, обработанные фрукты и овощи.', examples: ['мясо', 'рыба', 'сыр', 'йогурт', 'консервы'], keywords: 'еда мясо рыба молоко сыр продукты' },
+  { id: 30, type: 'goods', title: 'Кофе, чай, сладости и выпечка', description: 'Кофе, чай, какао, хлеб, кондитерские изделия, крупы, специи и соусы.', examples: ['кофе', 'чай', 'хлеб', 'сладости', 'соусы'], keywords: 'кофе чай хлеб сладости специи соус продукты' },
+  { id: 31, type: 'goods', title: 'Сельхозпродукты и растения', description: 'Необработанные сельскохозяйственные продукты, живые растения, корма и семена.', examples: ['растения', 'семена', 'корма', 'свежие фрукты'], keywords: 'растения семена корм фрукты сельхоз' },
+  { id: 32, type: 'goods', title: 'Напитки без алкоголя', description: 'Пиво, безалкогольные напитки, воды, соки, сиропы и составы для напитков.', examples: ['вода', 'соки', 'лимонады', 'пиво безалкогольное'], keywords: 'напитки вода сок лимонад пиво' },
+  { id: 33, type: 'goods', title: 'Алкогольные напитки', description: 'Алкогольные напитки, кроме пива, винные и крепкие напитки.', examples: ['вино', 'водка', 'ликеры', 'коктейли'], keywords: 'алкоголь вино водка ликер' },
+  { id: 34, type: 'goods', title: 'Табак и курительные принадлежности', description: 'Табак, заменители табака, сигареты, электронные сигареты и аксессуары.', examples: ['сигареты', 'табак', 'вейпы', 'зажигалки'], keywords: 'табак сигареты вейп зажигалка' },
+  { id: 35, type: 'services', title: 'Реклама, торговля и маркетплейсы', description: 'Реклама, управление бизнесом, офисные функции, розничная и онлайн-торговля.', examples: ['интернет-магазин', 'маркетинг', 'продвижение', 'розница'], keywords: 'реклама маркетинг магазин маркетплейс продажи бизнес' },
+  { id: 36, type: 'services', title: 'Финансы, страхование и недвижимость', description: 'Финансовые услуги, страхование, банковские операции, оценка и недвижимость.', examples: ['страхование', 'банк', 'ипотека', 'аренда недвижимости'], keywords: 'финансы банк страхование недвижимость аренда' },
+  { id: 37, type: 'services', title: 'Строительство и ремонт', description: 'Строительные, монтажные, ремонтные и установочные работы.', examples: ['строительство', 'ремонт', 'монтаж', 'сервис оборудования'], keywords: 'ремонт строительство монтаж сервис' },
+  { id: 38, type: 'services', title: 'Связь и телекоммуникации', description: 'Услуги связи, передача данных, телекоммуникации и доступ к сетям.', examples: ['мобильная связь', 'интернет-провайдер', 'передача сообщений'], keywords: 'связь интернет провайдер телеком сообщения' },
+  { id: 39, type: 'services', title: 'Транспортировка и доставка', description: 'Перевозка, упаковка, хранение товаров, доставка и организация путешествий.', examples: ['доставка', 'логистика', 'такси', 'склад', 'туры'], keywords: 'доставка логистика перевозка такси склад туризм' },
+  { id: 40, type: 'services', title: 'Обработка материалов', description: 'Обработка, переработка, печать, производство на заказ и кастомизация материалов.', examples: ['печать', 'пошив на заказ', 'переработка', 'гравировка'], keywords: 'печать производство обработка переработка гравировка' },
+  { id: 41, type: 'services', title: 'Образование, спорт и развлечения', description: 'Обучение, организация мероприятий, спорт, культура, развлечения и публикации.', examples: ['курсы', 'школы', 'фитнес', 'концерты', 'онлайн-обучение'], keywords: 'образование курсы школа спорт фитнес мероприятия' },
+  { id: 42, type: 'services', title: 'IT, наука и дизайн', description: 'Разработка ПО, SaaS, технологические услуги, научные исследования, дизайн и экспертиза.', examples: ['разработка сайтов', 'SaaS', 'дизайн', 'научные исследования'], keywords: 'it софт разработка сайт приложение дизайн saas наука' },
+  { id: 43, type: 'services', title: 'Рестораны, кафе и гостиницы', description: 'Услуги питания, временного проживания, кейтеринга и бронирования.', examples: ['кафе', 'рестораны', 'отели', 'доставка еды', 'кейтеринг'], keywords: 'кафе ресторан отель гостиница еда доставка кейтеринг' },
+  { id: 44, type: 'services', title: 'Медицина, красота и ветеринария', description: 'Медицинские, косметологические, ветеринарные, санитарные и SPA-услуги.', examples: ['клиника', 'салон красоты', 'стоматология', 'SPA', 'ветеринария'], keywords: 'медицина клиника салон красота стоматология spa ветеринария' },
+  { id: 45, type: 'services', title: 'Юридические и охранные услуги', description: 'Юридические услуги, безопасность, лицензирование, сопровождение и персональные услуги.', examples: ['юристы', 'охрана', 'лицензирование', 'патентные услуги'], keywords: 'юрист право охрана безопасность патент лицензия' }
+];
+
+const mktuClassDetails = {
+  15: {
+    explanation: 'Класс включает, в основном, музыкальные инструменты, их части и аксессуары.',
+    includes: [
+      'инструменты музыкальные механические и их принадлежности, например: шарманки, механические пианино, регуляторы интенсивности механических пианино, роботизированные ударные',
+      'шкатулки музыкальные',
+      'инструменты музыкальные электрические и электронные',
+      'струны, язычки, колышки и педали для музыкальных инструментов',
+      'камертоны, ключи для настройки',
+      'канифоль для струнных музыкальных инструментов'
+    ],
+    terms: [
+      'аккордеоны', 'арфы', 'балалайки [струнные музыкальные инструменты]', 'банджо', 'бандонеоны',
+      'барабаны [инструменты музыкальные]', 'басы [инструменты музыкальные]', 'букцины [трубы]',
+      'бунчуки [инструменты музыкальные]', 'варганы [инструменты музыкальные]', 'виолы', 'волос конский для смычков',
+      'волынки', 'гармоники', 'гармоники мелодические', 'гитары', 'гобои', 'гонги', 'горны',
+      'группы ударных инструментов роботизированные [музыкальные инструменты]', 'драм-машины',
+      'инструменты музыкальные', 'инструменты музыкальные для детей', 'инструменты музыкальные струнные',
+      'инструменты музыкальные электронные', 'инструменты язычковые духовые', 'камертоны',
+      'канифоль для струнных музыкальных инструментов', 'карильоны [инструменты музыкальные]', 'кастаньеты',
+      'кетгут для музыкальных инструментов', 'клавиатуры для музыкальных инструментов', 'клавиши для фортепьяно',
+      'клапаны для музыкальных инструментов', 'кларнеты', 'ключи для настройки струнных инструментов',
+      'кожа для барабанов', 'колки для музыкальных инструментов', 'колокольчики [инструменты музыкальные]',
+      'контрабасы', 'концертино', 'корнет-а-пистоны [инструменты музыкальные]', 'ксилофоны',
+      'ленты для записи мелодий для механических музыкальных инструментов', 'лиры', 'литавры [инструменты музыкальные]',
+      'мандолины', 'медиаторы для струнных инструментов', 'мехи для музыкальных инструментов',
+      'молоточки для музыкальных инструментов', 'мундштуки для духовых инструментов', 'окарины', 'органы',
+      'палочки барабанные', 'палочки дирижерские', 'педали для музыкальных инструментов',
+      'пипы [китайские гитары]', 'подбородники для скрипок', 'подставки для музыкальных инструментов',
+      'приспособления для переворачивания нот', 'пюпитры нотные', 'саксофоны', 'синтезаторы',
+      'скрипки', 'смычки для музыкальных инструментов', 'струны для арф', 'струны для музыкальных инструментов',
+      'тамбурины', 'тамтамы', 'тромбоны [инструменты музыкальные]', 'трубы [инструменты музыкальные]',
+      'флейты', 'фортепьяно', 'футляры для музыкальных инструментов', 'цитры', 'чаши поющие',
+      'шарманки', 'шкатулки музыкальные'
+    ]
+  }
+};
+
 const state = {
   search: '',
   classFilter: '',
@@ -69,7 +155,8 @@ const state = {
   intent: leadActions.buy.label,
   favorites: loadList(favoritesKey),
   cart: loadList(cartKey),
-  selectedClasses: {}
+  selectedClasses: {},
+  mktuActive: 35
 };
 
 const grid = document.querySelector('[data-grid]');
@@ -90,6 +177,11 @@ const pagination = document.querySelector('[data-pagination]');
 const adminSection = document.querySelector('[data-admin-section]');
 const adminList = document.querySelector('[data-admin-list]');
 const exportCustomButton = document.querySelector('[data-export-custom]');
+const mktuSearch = document.querySelector('[data-mktu-search]');
+const mktuGoods = document.querySelector('[data-mktu-goods]');
+const mktuServices = document.querySelector('[data-mktu-services]');
+const mktuResults = document.querySelector('[data-mktu-results]');
+const mktuDetail = document.querySelector('[data-mktu-detail]');
 
 function loadList(key) {
   try {
@@ -289,6 +381,94 @@ function transliterate(value) {
 
 function normalize(value) {
   return `${value}`.toLowerCase().replace(/ё/g, 'е');
+}
+
+function getMktuClass(id) {
+  const item = mktuClasses.find((entry) => entry.id === Number(id));
+  if (!item) return undefined;
+  return {
+    ...item,
+    ...(mktuClassDetails[item.id] || {})
+  };
+}
+
+function matchesMktuSearch(item, query) {
+  if (!query) return true;
+  const haystack = [
+    item.id,
+    item.title,
+    item.description,
+    item.examples.join(' '),
+    item.keywords
+  ].join(' ');
+  const normalizedHaystack = normalize(haystack);
+  const translitHaystack = transliterate(haystack);
+  const normalizedQuery = normalize(query);
+  const translitQuery = transliterate(query);
+  return normalizedHaystack.includes(normalizedQuery) || translitHaystack.includes(translitQuery);
+}
+
+function renderMktuButton(item) {
+  const active = item.id === Number(state.mktuActive) ? ' is-active' : '';
+  return `<button class="mktu-number${active}" type="button" data-mktu-number="${item.id}" aria-label="Класс МКТУ ${item.id}">${item.id}</button>`;
+}
+
+function renderMktuDetail(item = getMktuClass(state.mktuActive)) {
+  if (!mktuDetail || !item) return;
+  const typeLabel = item.type === 'goods' ? 'Товары' : 'Услуги';
+  const explanation = item.explanation || item.description;
+  const includes = item.includes || item.examples.map((example) => `${example} и близкие по назначению товары или услуги`);
+  const terms = item.terms || item.examples;
+  mktuDetail.innerHTML = `
+    <span>${typeLabel}</span>
+    <h4>Класс ${item.id}. ${item.title}</h4>
+    <section class="mktu-detail-block">
+      <h5>Пояснения</h5>
+      <p>${explanation}</p>
+    </section>
+    <section class="mktu-detail-block">
+      <h5><strong>+</strong> К классу относятся, в частности:</h5>
+      <ul>${includes.map((line) => `<li>${line}</li>`).join('')}</ul>
+    </section>
+    <section class="mktu-detail-block">
+      <h5>${typeLabel}</h5>
+      <p class="mktu-terms">${terms.join('; ')}.</p>
+    </section>
+    <div class="mktu-detail-actions">
+      <button class="button button-dark" type="button" data-mktu-filter="${item.id}">Показать знаки в каталоге</button>
+      <button class="button button-outline" type="button" data-mktu-consult>Уточнить класс</button>
+    </div>
+  `;
+}
+
+function renderMktuDirectory(query = '') {
+  if (!mktuGoods || !mktuServices || !mktuResults) return;
+  const goods = mktuClasses.filter((item) => item.type === 'goods');
+  const services = mktuClasses.filter((item) => item.type === 'services');
+  const filtered = mktuClasses.filter((item) => matchesMktuSearch(item, query)).slice(0, 8);
+
+  mktuGoods.innerHTML = goods.map(renderMktuButton).join('');
+  mktuServices.innerHTML = services.map(renderMktuButton).join('');
+  mktuResults.innerHTML = query
+    ? filtered.map((item) => `<button type="button" data-mktu-number="${item.id}">Класс ${item.id} · ${item.title}</button>`).join('')
+    : '';
+  renderMktuDetail();
+}
+
+function selectMktuClass(id, shouldScroll = false) {
+  const item = getMktuClass(id);
+  if (!item) return;
+  state.mktuActive = item.id;
+  renderMktuDirectory(mktuSearch?.value.trim() || '');
+  if (shouldScroll) scrollToTarget(document.querySelector('#mktu-directory'));
+}
+
+function filterCatalogByMktu(id) {
+  state.classFilter = String(id);
+  state.page = 1;
+  classFilter.value = state.classFilter;
+  renderCatalog();
+  scrollToTarget(document.querySelector('#catalog'));
 }
 
 function matchesSearch(item, query) {
@@ -531,6 +711,29 @@ function bindControls() {
   document.querySelectorAll('[data-open-registration]').forEach((button) => {
     button.addEventListener('click', () => openCart('registration'));
   });
+  document.querySelectorAll('[data-mktu-preview]').forEach((button) => {
+    button.addEventListener('click', () => selectMktuClass(button.dataset.mktuPreview, true));
+  });
+  [mktuGoods, mktuServices, mktuResults].forEach((container) => {
+    container?.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-mktu-number]');
+      if (!button) return;
+      selectMktuClass(button.dataset.mktuNumber);
+    });
+  });
+  mktuSearch?.addEventListener('input', (event) => {
+    renderMktuDirectory(event.target.value.trim());
+  });
+  mktuDetail?.addEventListener('click', (event) => {
+    const filterButton = event.target.closest('[data-mktu-filter]');
+    if (filterButton) {
+      filterCatalogByMktu(filterButton.dataset.mktuFilter);
+      return;
+    }
+    if (event.target.closest('[data-mktu-consult]')) {
+      openCart('consult');
+    }
+  });
   document.querySelectorAll('[data-mktu-select]').forEach((link) => {
     link.addEventListener('click', (event) => {
       event.preventDefault();
@@ -611,6 +814,7 @@ function bindForms() {
 }
 
 renderFilters();
+renderMktuDirectory();
 bindControls();
 bindForms();
 updateCart();

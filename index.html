@@ -136,23 +136,53 @@
         <div class="mktu-head">
           <div>
             <p class="eyebrow">Подсказка для выбора</p>
-            <h2>Частые классы МКТУ</h2>
-            <p>Классы помогают понять, для каких товаров и услуг подходит знак. Нажмите на номер класса, чтобы сразу отфильтровать каталог.</p>
+            <h2>Подбор класса МКТУ</h2>
+            <p>Начните с популярных направлений или откройте полный справочник. Нажмите на номер класса, чтобы увидеть описание и примеры товаров или услуг.</p>
           </div>
           <a class="button button-dark" href="#mktu-directory">Открыть справочник</a>
         </div>
-        <div class="mktu-grid" id="mktu-directory">
-          <article><a href="#catalog" data-mktu-select="3">3</a><h3>Косметика и бытовая химия</h3><p>Кремы, шампуни, духи, дезодоранты, чистящие средства.</p></article>
-          <article><a href="#catalog" data-mktu-select="5">5</a><h3>Фармацевтика и БАДы</h3><p>Лекарства, витамины, пластыри, антисептики, товары гигиены.</p></article>
-          <article><a href="#catalog" data-mktu-select="9">9</a><h3>Электроника и ПО</h3><p>Приложения, устройства, аксессуары, камеры, приборы, оптика.</p></article>
-          <article><a href="#catalog" data-mktu-select="25">25</a><h3>Одежда и обувь</h3><p>Повседневная и спортивная одежда, обувь, головные уборы.</p></article>
-          <article><a href="#catalog" data-mktu-select="30">30</a><h3>Продукты питания</h3><p>Кофе, чай, хлеб, сладости, специи, соусы, крупы.</p></article>
-          <article><a href="#catalog" data-mktu-select="35">35</a><h3>Реклама и торговля</h3><p>Маркетинг, интернет-магазины, розница, управление бизнесом.</p></article>
-          <article><a href="#catalog" data-mktu-select="39">39</a><h3>Логистика и доставка</h3><p>Перевозки, хранение, доставка, упаковка и организация поездок.</p></article>
-          <article><a href="#catalog" data-mktu-select="41">41</a><h3>Образование и спорт</h3><p>Курсы, школы, фитнес-клубы, мероприятия и развлечения.</p></article>
-          <article><a href="#catalog" data-mktu-select="42">42</a><h3>IT, наука и дизайн</h3><p>Разработка ПО, сайты, SaaS, дизайн, исследования и экспертиза.</p></article>
-          <article><a href="#catalog" data-mktu-select="43">43</a><h3>Общепит и отели</h3><p>Рестораны, доставка еды, гостиницы, хостелы, кейтеринг.</p></article>
-          <article><a href="#catalog" data-mktu-select="44">44</a><h3>Медицина и красота</h3><p>Клиники, стоматологии, салоны красоты, SPA, ветеринария.</p></article>
+        <div class="mktu-layout">
+          <section class="mktu-panel">
+            <div class="mktu-panel-head">
+              <h3>Часто используемые</h3>
+              <p>Быстрый выбор для типовых бизнесов и готовых знаков из каталога.</p>
+            </div>
+            <div class="mktu-grid">
+              <article><button type="button" data-mktu-preview="3">3</button><h3>Косметика и бытовая химия</h3><p>Кремы, шампуни, духи, дезодоранты, чистящие средства.</p></article>
+              <article><button type="button" data-mktu-preview="5">5</button><h3>Фармацевтика и БАДы</h3><p>Лекарства, витамины, пластыри, антисептики, товары гигиены.</p></article>
+              <article><button type="button" data-mktu-preview="9">9</button><h3>Электроника и ПО</h3><p>Приложения, устройства, аксессуары, камеры, приборы, оптика.</p></article>
+              <article><button type="button" data-mktu-preview="25">25</button><h3>Одежда и обувь</h3><p>Повседневная и спортивная одежда, обувь, головные уборы.</p></article>
+              <article><button type="button" data-mktu-preview="30">30</button><h3>Продукты питания</h3><p>Кофе, чай, хлеб, сладости, специи, соусы, крупы.</p></article>
+              <article><button type="button" data-mktu-preview="35">35</button><h3>Реклама и торговля</h3><p>Маркетинг, интернет-магазины, розница, управление бизнесом.</p></article>
+              <article><button type="button" data-mktu-preview="39">39</button><h3>Логистика и доставка</h3><p>Перевозки, хранение, доставка, упаковка и организация поездок.</p></article>
+              <article><button type="button" data-mktu-preview="41">41</button><h3>Образование и спорт</h3><p>Курсы, школы, фитнес-клубы, мероприятия и развлечения.</p></article>
+              <article><button type="button" data-mktu-preview="42">42</button><h3>IT, наука и дизайн</h3><p>Разработка ПО, сайты, SaaS, дизайн, исследования и экспертиза.</p></article>
+              <article><button type="button" data-mktu-preview="43">43</button><h3>Общепит и отели</h3><p>Рестораны, доставка еды, гостиницы, хостелы, кейтеринг.</p></article>
+              <article><button type="button" data-mktu-preview="44">44</button><h3>Медицина и красота</h3><p>Клиники, стоматологии, салоны красоты, SPA, ветеринария.</p></article>
+            </div>
+          </section>
+          <section class="mktu-panel mktu-finder" id="mktu-directory">
+            <div class="mktu-panel-head">
+              <h3>Все классы МКТУ</h3>
+              <p>Введите товар или услугу, либо выберите номер класса вручную.</p>
+            </div>
+            <label class="mktu-search">
+              <span>Поиск по товару или услуге</span>
+              <input type="search" placeholder="Например: одежда, доставка, приложение" data-mktu-search>
+            </label>
+            <div class="mktu-class-groups">
+              <div>
+                <h4>Товары</h4>
+                <div class="mktu-number-list" data-mktu-goods></div>
+              </div>
+              <div>
+                <h4>Услуги</h4>
+                <div class="mktu-number-list" data-mktu-services></div>
+              </div>
+            </div>
+            <div class="mktu-search-results" data-mktu-results></div>
+            <article class="mktu-detail" data-mktu-detail></article>
+          </section>
         </div>
       </section>
 

@@ -3654,11 +3654,16 @@ body .request-section .request-form .privacy-consent a {
 .team-grid .expert-card > a,
 .team-grid .expert-card > strong {
   color: var(--ink);
+  text-decoration: none;
 }
 
 .team-grid .expert-links a {
   border-color: var(--ink);
   background: linear-gradient(180deg, #f0cf5a 0%, #d4af37 100%);
   color: var(--ink);
+}
+
+.footer-details div a {
+  text-decoration: none;
 }
 

@@ -3458,6 +3458,10 @@ body {
   color: var(--accent-strong);
 }
 
+.hero .eyebrow {
+  color: var(--ink);
+}
+
 .hero .hero-note,
 .promo-sale {
   border-color: rgba(212, 175, 55, 0.42);

@@ -677,12 +677,15 @@ textarea {
 
 .pagination {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 8px;
+  max-width: 100%;
   margin-top: 26px;
 }
 
 .pagination button {
+  flex: 0 0 auto;
   min-width: 42px;
   height: 42px;
   border: 1px solid var(--line);
@@ -3013,6 +3016,19 @@ section[id],
 }
 
 @media (max-width: 640px) {
+  html {
+    scroll-padding-top: 24px;
+  }
+
+  section[id],
+  .promo-sale[id] {
+    scroll-margin-top: 24px;
+  }
+
+  .site-header {
+    position: static;
+  }
+
   .site-header .brand-logo {
     width: 150px;
     max-width: 62vw;

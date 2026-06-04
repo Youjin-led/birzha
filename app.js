@@ -1663,13 +1663,11 @@ const sourceTrademarks = [
     "sourceId": "1136",
     "title": "Знак №076",
     "logo": "OUABA",
-    "classes": [],
+    "classes": [8, 11, 25, 30],
     "price": "от 190 тыс. руб. за класс",
     "minPrice": 190000,
     "discount": false,
-    "business": [
-      "товары"
-    ],
+    "business": ["товары", "товары для дома", "одежда", "еда"],
     "registry": "https://www1.fips.ru/fips_servl/fips_servlet?DB=RUTM&rn=1895&DocNumber=1185137",
     "description": "190.000 за класс или 420.000 ₽ за все классы"
   },
@@ -1996,13 +1994,11 @@ const sourceTrademarks = [
     "sourceId": "1115",
     "title": "Знак №092",
     "logo": "Medweek",
-    "classes": [],
+    "classes": [4, 8, 11, 20, 21, 34, 35],
     "price": "от 2,9 млн руб.",
     "minPrice": 2900000,
     "discount": false,
-    "business": [
-      "товары"
-    ],
+    "business": ["товары", "товары для дома", "маркетплейсы"],
     "registry": "https://www1.fips.ru/fips_servl/fips_servlet?DB=RUTM&rn=1895&DocNumber=789988",
     "description": "Продаётся зарегистрированный товарный знак Medweek (действует с 2020 года) с полным пакетом бренд-активов. Разрабатывался бренд американским дизайнером под инвестиционный проект с большими инвестиционными вложениями в маркетинг и репутацию около 4 000 000руб."
   },
@@ -2269,13 +2265,11 @@ const sourceTrademarks = [
     "sourceId": "1082",
     "title": "Знак №105",
     "logo": "PriceAdvice, ПрайсЭдвайс",
-    "classes": [],
+    "classes": [9, 35, 36, 38, 41],
     "price": "от 549 тыс. руб.",
     "minPrice": 549000,
     "discount": false,
-    "business": [
-      "товары"
-    ],
+    "business": ["IT", "маркетплейсы", "финансы", "связь"],
     "registry": "https://www1.fips.ru/fips_servl/fips_servlet?DB=RUTM&rn=1895&DocNumber=662616",
     "description": "Продажа путем передачи 100% доли в ООО \"ПрайсЭдвайс\" - ИНН 9723036196, дата регистрации - 04.10.2017.Белая, без долгов, с небольшими оборотами, нулевка. УСН 6% (доходы).Смена директора обязательна. Юридический адрес может быть сохранен."
   },
@@ -2331,13 +2325,11 @@ const sourceTrademarks = [
     "sourceId": "1062",
     "title": "Знак №108",
     "logo": "ЛЮБАВИЦА со времен былинных славит",
-    "classes": [],
+    "classes": [1, 2, 3, 4, 5, 24, 25, 29, 30, 31, 32, 33, 35, 37, 41, 43, 44],
     "price": "от 950 тыс. руб.",
     "minPrice": 950000,
     "discount": false,
-    "business": [
-      "IT"
-    ],
+    "business": ["еда", "маркетплейсы", "рестораны", "медицина"],
     "registry": "https://www1.fips.ru/fips_servl/fips_servlet?DB=RUTM&rn=1895&DocNumber=1091781",
     "description": "Два свидетельства на товарный знак с разными логотипами: № 1091781 (17 классов: 1, 2, 3, 4, 5, 24, 25, 29, 30, 31, 32, 33, 35, 37, 41, 43, 44) и № 663491 (5 классов: 29, 30, 32, 35, 43). Есть домен ЛЮБАВИЦА.РФЦена указана за все классы."
   },
@@ -2347,13 +2339,11 @@ const sourceTrademarks = [
     "sourceId": "1061",
     "title": "Знак №109",
     "logo": "ЛЕСОРУБКА не руби с плеча",
-    "classes": [],
+    "classes": [2, 3, 5, 6, 8, 11, 19, 20, 25, 35, 37, 40, 44],
     "price": "от 250 тыс. руб.",
     "minPrice": 250000,
     "discount": false,
-    "business": [
-      "товары"
-    ],
+    "business": ["строительство", "товары для дома", "маркетплейсы", "медицина"],
     "registry": "https://www1.fips.ru/fips_servl/fips_servlet?DB=RUTM&rn=1895&DocNumber=886986",
     "description": "Три свидетельства на регистрацию товарного знака: № 886986 (классы: 20, 25, 35, 37, 40, 44); № 1043498 (классы: 5, 35) и № 886987 (классы: 2, 3, 6, 8, 11, 19)Цена указана за все классы."
   },
@@ -12108,6 +12098,10 @@ function makeLogoText(item, index) {
   return words[index % words.length];
 }
 
+function getTrademarkTitle(item) {
+  return `Знак №${item.registryId || item.id}`;
+}
+
 function parseList(value) {
   return `${value}`.split(',').map((item) => item.trim()).filter(Boolean);
 }
@@ -12119,6 +12113,10 @@ function parseClasses(value) {
 function getMinPrice(value) {
   const match = `${value}`.replace(/\s/g, '').match(/\d+/);
   return match ? Number(match[0]) : 100000;
+}
+
+function getCatalogShuffleKey(item) {
+  return (Number(item.id) * 73) % 541;
 }
 
 function getSelectedClasses(item) {
@@ -12179,7 +12177,7 @@ function getCartPayload(form) {
   const items = getCartItems();
   const selected = items.map((item) => {
     const classes = getSelectedClasses(item).join(', ');
-    return `${item.title} №${item.id}; МКТУ: ${classes}; ${item.price}; ${item.registry}`;
+    return `${getTrademarkTitle(item)}; внутренний ID: ${item.id}; МКТУ: ${classes}; ${item.price}; ${item.registry}`;
   }).join('\n');
 
   return {
@@ -12395,6 +12393,9 @@ function filteredTrademarks() {
   if (state.sort === 'classes-desc') {
     list.sort((a, b) => b.classes.length - a.classes.length);
   }
+  if (state.sort === 'default') {
+    list.sort((a, b) => getCatalogShuffleKey(a) - getCatalogShuffleKey(b));
+  }
   return list;
 }
 
@@ -12439,7 +12440,7 @@ function renderCatalog() {
     logoNode.innerHTML = item.image
       ? `<img src="${item.image}" alt="${item.title}"><span>№${item.id}</span>`
       : `<strong>${item.logo}</strong><span>№${item.id}</span>`;
-    node.querySelector('[data-title]').textContent = item.title;
+    node.querySelector('[data-title]').textContent = getTrademarkTitle(item);
     node.querySelector('[data-registry]').href = item.registry;
     node.querySelector('[data-classes]').innerHTML = item.classes.map((value) => `<span>${value}</span>`).join('');
     node.querySelector('[data-business]').textContent = item.business.join(', ');
@@ -12507,13 +12508,13 @@ function updateCart() {
   intentInput.value = state.intent;
   selectedInput.value = [
     `Цель заявки: ${state.intent}`,
-    ...items.map((item) => `${item.title}: МКТУ ${getSelectedClasses(item).join(', ')}; ${item.registry}`)
+    ...items.map((item) => `${getTrademarkTitle(item)}; внутренний ID ${item.id}: МКТУ ${getSelectedClasses(item).join(', ')}; ${item.registry}`)
   ].join('\n');
   cartItems.innerHTML = items.length
     ? items.map((item) => `
       <div class="cart-item">
         <div>
-          <strong>${item.title}</strong>
+          <strong>${getTrademarkTitle(item)}</strong>
           <div>${item.price}</div>
           <div class="cart-class-picker">
             <span>Выберите классы МКТУ</span>

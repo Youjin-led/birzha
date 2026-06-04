@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Замените https://example.ru на реальный домен перед публикацией sitemap.xml -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://example.ru/</loc>
+    <loc>https://znakvsem.ru/</loc>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://example.ru/catalog.html</loc>
+    <loc>https://znakvsem.ru/catalog.html</loc>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://example.ru/mktu.html</loc>
+    <loc>https://znakvsem.ru/mktu.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://example.ru/about.html</loc>
+    <loc>https://znakvsem.ru/about.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://example.ru/faq.html</loc>
+    <loc>https://znakvsem.ru/faq.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://example.ru/place.html</loc>
+    <loc>https://znakvsem.ru/place.html</loc>
     <priority>0.6</priority>
   </url>
 </urlset>

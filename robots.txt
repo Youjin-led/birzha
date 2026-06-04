@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# После подключения домена добавьте абсолютную ссылку:
-# Sitemap: https://example.ru/sitemap.xml
+Sitemap: https://znakvsem.ru/sitemap.xml

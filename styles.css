@@ -3271,6 +3271,16 @@ section[id],
 }
 
 @media (max-width: 640px) {
+  .service-heading h1,
+  .service-heading h2,
+  .deal-copy h1,
+  .deal-copy h2,
+  .mktu-head h1,
+  .mktu-head h2 {
+    font-size: 32px;
+    line-height: 1.25;
+  }
+
   .mktu-panel {
     padding: 16px;
   }

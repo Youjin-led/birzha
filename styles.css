@@ -3638,10 +3638,27 @@ textarea:focus,
   color: rgba(255, 255, 255, 0.72);
 }
 
+.footer-details div span,
+.footer-details div strong,
+.footer-details div a {
+  color: var(--ink);
+}
+
 .privacy-consent span,
 .privacy-consent a,
 body .request-section .request-form .privacy-consent span,
 body .request-section .request-form .privacy-consent a {
   color: var(--muted);
+}
+
+.team-grid .expert-card > a,
+.team-grid .expert-card > strong {
+  color: var(--ink);
+}
+
+.team-grid .expert-links a {
+  border-color: var(--ink);
+  background: linear-gradient(180deg, #f0cf5a 0%, #d4af37 100%);
+  color: var(--ink);
 }
 

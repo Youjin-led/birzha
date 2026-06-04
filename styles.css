@@ -3314,3 +3314,318 @@ section[id],
     width: 100%;
   }
 }
+
+/* Gold reference theme */
+:root {
+  --bg: #1a1208;
+  --paper: #ffffff;
+  --ink: #0d0a04;
+  --muted: #68635b;
+  --line: rgba(212, 175, 55, 0.2);
+  --accent: #d4af37;
+  --accent-strong: #e8c547;
+  --danger: #d4af37;
+  --deep: #0d0a04;
+  --soft: #241906;
+  --sage: #d4af37;
+  --sky: #e8c547;
+  --blush: #f3e2a1;
+  --shadow: 0 28px 80px rgba(0, 0, 0, 0.28);
+}
+
+body {
+  background:
+    radial-gradient(circle at 50% 0, rgba(212, 175, 55, 0.18), transparent 34rem),
+    linear-gradient(180deg, #33270d 0, #1a1208 120px, #0d0a04 100%);
+  color: #ffffff;
+}
+
+.site-header {
+  border-bottom: 1px solid rgba(13, 10, 4, 0.32);
+  background: linear-gradient(180deg, #f5d966 0%, #d4af37 46%, #b99016 100%);
+  color: var(--ink);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.38);
+}
+
+.brand,
+.main-nav,
+.main-nav a,
+.header-cart {
+  color: var(--ink);
+}
+
+.brand strong,
+.header-cart strong {
+  background: var(--deep);
+  color: var(--accent-strong);
+}
+
+.main-nav {
+  font-weight: 900;
+}
+
+.main-nav a:hover {
+  color: #000000;
+}
+
+.header-cart {
+  border-color: rgba(13, 10, 4, 0.34);
+  background: linear-gradient(180deg, #f7df75 0%, #d4af37 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 8px 20px rgba(0, 0, 0, 0.22);
+}
+
+.hero,
+.catalog-shell,
+.proof-strip,
+.service-band,
+.info-band,
+.deal-section,
+.mktu-section,
+.request-section,
+.admin-section,
+.site-footer,
+.page-hero,
+.promo-sale {
+  color: #ffffff;
+}
+
+.hero::before {
+  background:
+    radial-gradient(circle at 78% 24%, rgba(212, 175, 55, 0.28), transparent 30%),
+    radial-gradient(circle at 28% 18%, rgba(232, 197, 71, 0.12), transparent 34%),
+    linear-gradient(135deg, #33270d 0%, #1a1208 48%, #0d0a04 100%);
+}
+
+.hero h1,
+.catalog-head h1,
+.catalog-head h2,
+.request-copy h2,
+.admin-section h2,
+.page-hero h1,
+.promo-sale h2,
+.mktu-head h2 {
+  color: #ffffff;
+}
+
+.hero p:not(.eyebrow),
+.catalog-head p:not(.eyebrow),
+.request-copy p,
+.admin-section > div p,
+.page-hero p,
+.promo-sale p,
+.mktu-head p,
+.result-count {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.eyebrow,
+.hero .eyebrow,
+.registry-link,
+.team-grid a,
+.mktu-head a:not(.button),
+.link-button {
+  color: var(--accent-strong);
+}
+
+.hero .hero-note,
+.promo-sale {
+  border-color: rgba(212, 175, 55, 0.42);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.98), rgba(255, 244, 176, 0.92));
+  color: var(--ink);
+}
+
+.hero .hero-note,
+.promo-sale p,
+.promo-sale h2,
+.promo-sale .eyebrow {
+  color: var(--ink);
+}
+
+.button-dark,
+.button-primary,
+.card-actions .button-dark {
+  border-color: rgba(212, 175, 55, 0.55);
+  background: linear-gradient(180deg, #2f230d 0%, #0d0a04 100%);
+  color: var(--accent-strong);
+  box-shadow: inset 0 1px 0 rgba(232, 197, 71, 0.34), 0 12px 30px rgba(0, 0, 0, 0.28);
+}
+
+.button-dark:hover,
+.button-primary:hover {
+  border-color: var(--accent-strong);
+  background: linear-gradient(180deg, #3d2d0f 0%, #120d04 100%);
+  color: #ffe58a;
+}
+
+.button-outline,
+.button-ghost {
+  border-color: rgba(212, 175, 55, 0.55);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+}
+
+.toolbar,
+.request-form,
+.admin-form,
+.lead-form,
+.modal-panel,
+.mktu-class-groups,
+.mktu-detail,
+.mktu-search input {
+  border-color: rgba(212, 175, 55, 0.16);
+  background: #ffffff;
+  color: var(--ink);
+}
+
+.toolbar {
+  box-shadow: 0 20px 54px rgba(0, 0, 0, 0.28);
+}
+
+.toolbar span,
+.mktu-search,
+.business,
+.team-grid span,
+.steps span,
+.proof-strip span,
+.mktu-detail p {
+  color: var(--muted);
+}
+
+input,
+select,
+textarea {
+  border-color: rgba(13, 10, 4, 0.16);
+  background: #ffffff;
+  color: var(--ink);
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+.mktu-search input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.18);
+}
+
+.tm-card,
+.proof-strip div,
+.steps li,
+.team-grid article,
+.faq-item,
+.admin-card,
+.service-card,
+.info-card,
+.deal-card {
+  border-color: rgba(212, 175, 55, 0.16);
+  background: #ffffff;
+  color: var(--ink);
+  box-shadow: 0 18px 54px rgba(0, 0, 0, 0.22);
+}
+
+.tm-card:hover {
+  border-color: rgba(232, 197, 71, 0.5);
+  box-shadow: 0 26px 72px rgba(0, 0, 0, 0.32);
+}
+
+.tm-card-head,
+.tm-logo {
+  background:
+    radial-gradient(circle at 22% 0, rgba(255, 235, 139, 0.9), transparent 34%),
+    linear-gradient(135deg, #f0cf5a 0%, #d4af37 48%, #b99016 100%);
+  color: var(--ink);
+}
+
+.tm-logo-img,
+.tm-logo-text,
+.favorite-button {
+  background: #ffffff;
+  color: var(--ink);
+}
+
+.class-pill,
+.class-list span,
+.price-row span:not(:empty),
+.mktu-number,
+.mktu-detail > span,
+.tag,
+.badge {
+  border-color: rgba(13, 10, 4, 0.18);
+  background: linear-gradient(180deg, #f0cf5a 0%, #d4af37 100%);
+  color: var(--ink);
+  box-shadow: 0 4px 12px rgba(13, 10, 4, 0.12);
+}
+
+.mktu-number:hover,
+.mktu-number.is-active,
+.mktu-grid button[data-mktu-preview]:hover {
+  background: var(--deep);
+  color: var(--accent-strong);
+  outline-color: var(--accent);
+}
+
+.mktu-panel {
+  border-color: rgba(212, 175, 55, 0.24);
+  background: rgba(13, 10, 4, 0.42);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+}
+
+.mktu-panel-head h3,
+.mktu-detail h4,
+.mktu-class-groups h4,
+.faq-item summary,
+.price-row strong,
+.tm-card h2,
+.tm-type {
+  color: var(--ink);
+}
+
+.mktu-panel-head p,
+.mktu-search-results button {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.mktu-search-results button {
+  border-color: rgba(212, 175, 55, 0.58);
+}
+
+.mktu-search-results button:hover {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.mktu-detail-block h5,
+.mktu-detail-block li::marker {
+  color: #b8941f;
+}
+
+.mktu-detail-block h5 strong {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.mktu-detail-block ul,
+.mktu-terms {
+  color: var(--ink) !important;
+}
+
+.site-footer {
+  border-top-color: rgba(212, 175, 55, 0.22);
+}
+
+.footer-details article {
+  border-color: rgba(212, 175, 55, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.footer-details,
+.footer-details a,
+.site-footer p {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.privacy-consent span,
+.privacy-consent a,
+body .request-section .request-form .privacy-consent span,
+body .request-section .request-form .privacy-consent a {
+  color: var(--muted);
+}

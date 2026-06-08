@@ -3476,6 +3476,47 @@ body {
   color: var(--ink);
 }
 
+.content-section {
+  padding: 44px var(--page-pad) 72px;
+}
+
+.content-card {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 34px;
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--ink);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.16);
+}
+
+.content-card h2 {
+  margin: 30px 0 12px;
+  font-size: clamp(22px, 3vw, 30px);
+  line-height: 1.1;
+}
+
+.content-card h2:first-child {
+  margin-top: 0;
+}
+
+.content-card p,
+.content-card li {
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.content-card a {
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.content-card ul {
+  margin: 0 0 12px;
+  padding-left: 20px;
+}
+
 .button-dark,
 .button-primary,
 .card-actions .button-dark {

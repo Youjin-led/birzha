@@ -12163,6 +12163,25 @@ function redirectToPatentvsem(action, payload = {}) {
   window.location.href = buildPatentvsemUrl(action, payload);
 }
 
+async function submitLeadRequest(action, payload = {}) {
+  const response = await fetch('send.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      source: 'znakvsem',
+      action,
+      action_title: leadActions[action]?.label || state.intent,
+      page_url: window.location.href,
+      ...payload
+    })
+  });
+  const result = await response.json().catch(() => ({}));
+  if (!response.ok || !result.ok) {
+    throw new Error(result.message || 'Не удалось отправить заявку');
+  }
+  return result;
+}
+
 function setSiteCookie(name, value, days = 365) {
   const maxAge = Math.max(1, days) * 24 * 60 * 60;
   document.cookie = `${name}=${encodeURIComponent(value)}; Max-Age=${maxAge}; Path=/; SameSite=Lax`;
@@ -12758,18 +12777,43 @@ function bindControls() {
 }
 
 function bindForms() {
-  document.querySelector('[data-lead-form]')?.addEventListener('submit', (event) => {
+  document.querySelector('[data-lead-form]')?.addEventListener('submit', async (event) => {
     event.preventDefault();
+    const form = event.currentTarget;
     const status = document.querySelector('[data-lead-status]');
-    if (status) status.textContent = 'Перенаправляем в ПатентВсем...';
-    redirectToPatentvsem(state.action, getCartPayload(event.currentTarget));
+    const submitButton = form.querySelector('[type="submit"]');
+    if (status) status.textContent = 'Отправляем заявку...';
+    if (submitButton) submitButton.disabled = true;
+    try {
+      await submitLeadRequest(state.action, getCartPayload(form));
+      if (status) status.textContent = 'Заявка отправлена. Патентный отдел свяжется с вами.';
+      state.cart = [];
+      saveList(cartKey, state.cart);
+      updateCart();
+      form.reset();
+    } catch (error) {
+      if (status) status.textContent = error.message || 'Не удалось отправить заявку. Попробуйте позже.';
+    } finally {
+      if (submitButton) submitButton.disabled = false;
+    }
   });
 
-  document.querySelector('[data-place-form]')?.addEventListener('submit', (event) => {
+  document.querySelector('[data-place-form]')?.addEventListener('submit', async (event) => {
     event.preventDefault();
+    const form = event.currentTarget;
     const status = document.querySelector('[data-place-status]');
-    if (status) status.textContent = 'Перенаправляем в ПатентВсем...';
-    redirectToPatentvsem('place', getPlacePayload(event.currentTarget));
+    const submitButton = form.querySelector('[type="submit"]');
+    if (status) status.textContent = 'Отправляем заявку...';
+    if (submitButton) submitButton.disabled = true;
+    try {
+      await submitLeadRequest('place', getPlacePayload(form));
+      if (status) status.textContent = 'Заявка отправлена. Патентный отдел свяжется с вами.';
+      form.reset();
+    } catch (error) {
+      if (status) status.textContent = error.message || 'Не удалось отправить заявку. Попробуйте позже.';
+    } finally {
+      if (submitButton) submitButton.disabled = false;
+    }
   });
 
   const adminForm = document.querySelector('[data-admin-form]');

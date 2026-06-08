@@ -2,6 +2,11 @@ const registryBase = 'https://www1.fips.ru/registers-doc-view/fips_servlet?DB=RU
 const cartKey = 'znakvsem-cart-v1';
 const favoritesKey = 'znakvsem-favorites-v1';
 const customKey = 'znakvsem-custom-v1';
+const cookieConsentKey = 'znakvsem_cookie_consent';
+const cookieAcceptedAtKey = 'znakvsem_cookie_accepted_at';
+const cookieLandingKey = 'znakvsem_landing_page';
+const cookieReferrerKey = 'znakvsem_referrer';
+const trackingCookieKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'yclid', 'gclid'];
 const patentvsemLeadUrl = 'https://patentvsem.ru/tovarniy-znak';
 const leadActions = {
   buy: {
@@ -12158,6 +12163,87 @@ function redirectToPatentvsem(action, payload = {}) {
   window.location.href = buildPatentvsemUrl(action, payload);
 }
 
+function setSiteCookie(name, value, days = 365) {
+  const maxAge = Math.max(1, days) * 24 * 60 * 60;
+  document.cookie = `${name}=${encodeURIComponent(value)}; Max-Age=${maxAge}; Path=/; SameSite=Lax`;
+}
+
+function getSiteCookie(name) {
+  const prefix = `${name}=`;
+  return document.cookie
+    .split(';')
+    .map((part) => part.trim())
+    .find((part) => part.startsWith(prefix))
+    ?.slice(prefix.length) || '';
+}
+
+function hasCookieConsent() {
+  return decodeURIComponent(getSiteCookie(cookieConsentKey)) === 'accepted';
+}
+
+function captureAttributionCookies() {
+  if (!hasCookieConsent()) return;
+  const params = new URLSearchParams(window.location.search);
+
+  if (!getSiteCookie(cookieLandingKey)) {
+    setSiteCookie(cookieLandingKey, window.location.href);
+  }
+  if (document.referrer && !getSiteCookie(cookieReferrerKey)) {
+    setSiteCookie(cookieReferrerKey, document.referrer);
+  }
+
+  trackingCookieKeys.forEach((key) => {
+    const value = params.get(key);
+    if (value) setSiteCookie(`znakvsem_${key}`, value);
+  });
+}
+
+function getLeadTrackingPayload() {
+  if (!hasCookieConsent()) return { cookie_consent: 'not_accepted' };
+  const payload = {
+    cookie_consent: 'accepted',
+    cookie_accepted_at: decodeURIComponent(getSiteCookie(cookieAcceptedAtKey)),
+    landing_page: decodeURIComponent(getSiteCookie(cookieLandingKey)),
+    referrer: decodeURIComponent(getSiteCookie(cookieReferrerKey))
+  };
+
+  trackingCookieKeys.forEach((key) => {
+    const value = decodeURIComponent(getSiteCookie(`znakvsem_${key}`));
+    if (value) payload[key] = value;
+  });
+
+  return payload;
+}
+
+function initCookieConsent() {
+  if (hasCookieConsent()) {
+    captureAttributionCookies();
+    return;
+  }
+
+  const banner = document.createElement('div');
+  banner.className = 'cookie-banner';
+  banner.setAttribute('role', 'dialog');
+  banner.setAttribute('aria-live', 'polite');
+  banner.innerHTML = `
+    <div>
+      <strong>Cookies</strong>
+      <p>Мы используем cookies, чтобы запоминать источник перехода и улучшать обработку заявок.</p>
+    </div>
+    <div class="cookie-actions">
+      <a href="privacy.html">Политика</a>
+      <button class="button button-dark" type="button" data-cookie-accept>Принять</button>
+    </div>
+  `;
+  document.body.appendChild(banner);
+  banner.querySelector('[data-cookie-accept]')?.addEventListener('click', () => {
+    setSiteCookie(cookieConsentKey, 'accepted');
+    setSiteCookie(cookieAcceptedAtKey, new Date().toISOString());
+    captureAttributionCookies();
+    banner.remove();
+  });
+}
+
 function getHeaderOffset() {
   const header = document.querySelector('.site-header');
   return (header?.getBoundingClientRect().height || 0) + 18;
@@ -12181,6 +12267,7 @@ function getCartPayload(form) {
   }).join('\n');
 
   return {
+    ...getLeadTrackingPayload(),
     name: data.get('name')?.trim(),
     phone: data.get('phone')?.trim(),
     email: data.get('email')?.trim(),
@@ -12194,6 +12281,7 @@ function getCartPayload(form) {
 function getPlacePayload(form) {
   const data = new FormData(form);
   return {
+    ...getLeadTrackingPayload(),
     name: data.get('name')?.trim(),
     phone: data.get('phone')?.trim(),
     email: data.get('email')?.trim(),
@@ -12760,6 +12848,7 @@ function initApp() {
   renderCatalog();
   renderAdminList();
   restoreHashPosition();
+  initCookieConsent();
 }
 
 initApp();

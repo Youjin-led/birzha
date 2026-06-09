@@ -1,5 +1,6 @@
 birzha-site-release.zip
 __leads_store/
 info.php
+smtp-config.php
 *.log
 *.tmp
